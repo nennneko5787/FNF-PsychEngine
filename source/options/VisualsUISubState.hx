@@ -34,95 +34,207 @@ class VisualsUISubState extends BaseOptionsMenu
 		title = 'Visuals and UI';
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
 
-		var option:Option = new Option('Note Splashes',
-			"If unchecked, hitting \"Sick!\" notes won't show particles.",
-			'noteSplashes',
-			'bool',
-			true);
-		addOption(option);
+		if (ClientPrefs.language == "English")
+		{
+			var option:Option = new Option('Note Splashes',
+				"If unchecked, hitting \"Sick!\" notes won't show particles.",
+				'noteSplashes',
+				'bool',
+				true);
+			addOption(option);
 
-		var option:Option = new Option('Hide HUD',
-			'If checked, hides most HUD elements.',
-			'hideHud',
-			'bool',
-			false);
-		addOption(option);
-		
-		var option:Option = new Option('Time Bar:',
-			"What should the Time Bar display?",
-			'timeBarType',
-			'string',
-			'Time Left',
-			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
-		addOption(option);
+			var option:Option = new Option('Hide HUD',
+				'If checked, hides most HUD elements.',
+				'hideHud',
+				'bool',
+				false);
+			addOption(option);
+			
+			var option:Option = new Option('Time Bar:',
+				"What should the Time Bar display?",
+				'timeBarType',
+				'string',
+				'Time Left',
+				['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
+			addOption(option);
 
-		var option:Option = new Option('Flashing Lights',
-			"Uncheck this if you're sensitive to flashing lights!",
-			'flashing',
-			'bool',
-			true);
-		addOption(option);
+			var option:Option = new Option('Flashing Lights',
+				"Uncheck this if you're sensitive to flashing lights!",
+				'flashing',
+				'bool',
+				true);
+			addOption(option);
 
-		var option:Option = new Option('Camera Zooms',
-			"If unchecked, the camera won't zoom in on a beat hit.",
-			'camZooms',
-			'bool',
-			true);
-		addOption(option);
+			var option:Option = new Option('Camera Zooms',
+				"If unchecked, the camera won't zoom in on a beat hit.",
+				'camZooms',
+				'bool',
+				true);
+			addOption(option);
 
-		var option:Option = new Option('Score Text Zoom on Hit',
-			"If unchecked, disables the Score text zooming\neverytime you hit a note.",
-			'scoreZoom',
-			'bool',
-			true);
-		addOption(option);
+			var option:Option = new Option('Score Text Zoom on Hit',
+				"If unchecked, disables the Score text zooming\neverytime you hit a note.",
+				'scoreZoom',
+				'bool',
+				true);
+			addOption(option);
 
-		var option:Option = new Option('Health Bar Transparency',
-			'How much transparent should the health bar and icons be.',
-			'healthBarAlpha',
-			'percent',
-			1);
-		option.scrollSpeed = 1.6;
-		option.minValue = 0.0;
-		option.maxValue = 1;
-		option.changeValue = 0.1;
-		option.decimals = 1;
-		addOption(option);
-		
-		#if !mobile
-		var option:Option = new Option('FPS Counter',
-			'If unchecked, hides FPS Counter.',
-			'showFPS',
-			'bool',
-			true);
-		addOption(option);
-		option.onChange = onChangeFPSCounter;
-		#end
-		
-		var option:Option = new Option('Pause Screen Song:',
-			"What song do you prefer for the Pause Screen?",
-			'pauseMusic',
-			'string',
-			'Tea Time',
-			['None', 'Breakfast', 'Tea Time']);
-		addOption(option);
-		option.onChange = onChangePauseMusic;
-		
-		#if CHECK_FOR_UPDATES
-		var option:Option = new Option('Check for Updates',
-			'On Release builds, turn this on to check for updates when you start the game.',
-			'checkForUpdates',
-			'bool',
-			true);
-		addOption(option);
-		#end
+			var option:Option = new Option('Health Bar Transparency',
+				'How much transparent should the health bar and icons be.',
+				'healthBarAlpha',
+				'percent',
+				1);
+			option.scrollSpeed = 1.6;
+			option.minValue = 0.0;
+			option.maxValue = 1;
+			option.changeValue = 0.1;
+			option.decimals = 1;
+			addOption(option);
+			
+			#if !mobile
+			var option:Option = new Option('FPS Counter',
+				'If unchecked, hides FPS Counter.',
+				'showFPS',
+				'bool',
+				true);
+			addOption(option);
+			option.onChange = onChangeFPSCounter;
+			#end
+			
+			var option:Option = new Option('Pause Screen Song:',
+				"What song do you prefer for the Pause Screen?",
+				'pauseMusic',
+				'string',
+				'Tea Time',
+				['None', 'Breakfast', 'Tea Time']);
+			addOption(option);
+			option.onChange = onChangePauseMusic;
+			
+			#if CHECK_FOR_UPDATES
+			var option:Option = new Option('Check for Updates',
+				'On Release builds, turn this on to check for updates when you start the game.',
+				'checkForUpdates',
+				'bool',
+				true);
+			addOption(option);
+			#end
 
-		var option:Option = new Option('Combo Stacking',
-			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
-			'comboStacking',
-			'bool',
-			true);
-		addOption(option);
+			var option:Option = new Option('Combo Stacking',
+				"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
+				'comboStacking',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Language:',
+				"Currently there are only two choices, English and Japanese!",
+				'language',
+				'string',
+				'English',
+				['English','Japanese']);
+			addOption(option);
+		}
+
+		if (ClientPrefs.language == "Japanese")
+			{
+				var option:Option = new Option('Note Splashes',
+					"チェックを外すと、「Sick!」ノーツを打ってもパーティクルが表示されなくなります。",
+					'noteSplashes',
+					'bool',
+					true);
+				addOption(option);
+	
+				var option:Option = new Option('Hide HUD',
+					'チェックすると、ほとんどのHUD要素を非表示にします。',
+					'hideHud',
+					'bool',
+					false);
+				addOption(option);
+				
+				var option:Option = new Option('Time Bar:',
+					"タイムバーには何を表示しますか？",
+					'timeBarType',
+					'string',
+					'Time Left',
+					['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
+				addOption(option);
+	
+				var option:Option = new Option('Flashing Lights',
+					"光の点滅が苦手な方はチェックを外してください。",
+					'flashing',
+					'bool',
+					true);
+				addOption(option);
+	
+				var option:Option = new Option('Camera Zooms',
+					"チェックを外すと、ビートヒット時にカメラがズームインしなくなります。",
+					'camZooms',
+					'bool',
+					true);
+				addOption(option);
+	
+				var option:Option = new Option('Score Text Zoom on Hit',
+					"チェックを外すと、音符を叩くたびにスコアの文字が拡大表示される機能を無効にします。",
+					'scoreZoom',
+					'bool',
+					true);
+				addOption(option);
+	
+				var option:Option = new Option('Health Bar Transparency',
+					'体力バーとアイコンはどの程度透過させるべきでしょうか。',
+					'healthBarAlpha',
+					'percent',
+					1);
+				option.scrollSpeed = 1.6;
+				option.minValue = 0.0;
+				option.maxValue = 1;
+				option.changeValue = 0.1;
+				option.decimals = 1;
+				addOption(option);
+				
+				#if !mobile
+				var option:Option = new Option('FPS Counter',
+					'チェックを外すと、FPSカウンターを非表示にします。',
+					'showFPS',
+					'bool',
+					true);
+				addOption(option);
+				option.onChange = onChangeFPSCounter;
+				#end
+				
+				var option:Option = new Option('Pause Screen Song:',
+					"ポーズ画面の曲は何がいいですか？",
+					'pauseMusic',
+					'string',
+					'Tea Time',
+					['None', 'Breakfast', 'Tea Time']);
+				addOption(option);
+				option.onChange = onChangePauseMusic;
+				
+				#if CHECK_FOR_UPDATES
+				var option:Option = new Option('Check for Updates',
+					'リリースビルドの場合、これをオンにすると、ゲーム起動時にアップデートを確認するようになります。',
+					'checkForUpdates',
+					'bool',
+					true);
+				addOption(option);
+				#end
+	
+				var option:Option = new Option('Combo Stacking',
+					"チェックを外すと、レーティングとコンボはスタックされず、システムメモリを節約し、読みやすくなります。",
+					'comboStacking',
+					'bool',
+					true);
+				addOption(option);
+	
+				var option:Option = new Option('Language:',
+					"現在、選択できる言語は英語と日本語の二種類だけです！",
+					'language',
+					'string',
+					'English',
+					['English','Japanese']);
+				addOption(option);
+			}
 
 		super();
 	}

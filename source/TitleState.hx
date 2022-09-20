@@ -136,7 +136,7 @@ class TitleState extends MusicBeatState
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.checkForUpdates && !closedState) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
+			var http = new haxe.Http("https://raw.githubusercontent.com/nennneko5787/FNF-nekoEngine/main/gitVersion.txt");
 
 			http.onData = function (data:String)
 			{
@@ -561,6 +561,13 @@ class TitleState extends MusicBeatState
 							break;
 						}
 					}
+				}
+			}
+			#else
+			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
+			{
+				if (FlxG.keys.justPressed.F){
+					FlxG.fullscreen = !FlxG.fullscreen;
 				}
 			}
 			#end
