@@ -92,13 +92,33 @@ class VisualsUISubState extends BaseOptionsMenu
 			addOption(option);
 			
 			#if !mobile
-			var option:Option = new Option('FPS Counter',
-				'If unchecked, hides FPS Counter.',
+			var option:Option = new Option('Show FPS',
+				'If unchecked, hide the FPS counter.' ,
 				'showFPS',
 				'bool',
 				true);
 			addOption(option);
-			option.onChange = onChangeFPSCounter;
+
+			var option:Option = new Option('Show Memory Usage',
+				'If unchecked, hide memory usage.' ,
+				'showMemory',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Show Memory Heap',
+				'If unchecked, hide the maximum memory usage.' ,
+				'showMemoryHeap',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Show Version',
+				'If unchecked, hide the version.' ,
+				'showVersion',
+				'bool',
+				true);
+			addOption(option);
 			#end
 			
 			var option:Option = new Option('Pause Screen Song:',
@@ -136,105 +156,125 @@ class VisualsUISubState extends BaseOptionsMenu
 		}
 
 		if (ClientPrefs.language == "Japanese")
-			{
-				var option:Option = new Option('Note Splashes',
-					"チェックを外すと、「Sick!」ノーツを打ってもパーティクルが表示されなくなります。",
-					'noteSplashes',
-					'bool',
-					true);
-				addOption(option);
-	
-				var option:Option = new Option('Hide HUD',
-					'チェックすると、ほとんどのHUD要素を非表示にします。',
-					'hideHud',
-					'bool',
-					false);
-				addOption(option);
-				
-				var option:Option = new Option('Time Bar:',
-					"タイムバーには何を表示しますか？",
-					'timeBarType',
-					'string',
-					'Time Left',
-					['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
-				addOption(option);
-	
-				var option:Option = new Option('Flashing Lights',
-					"光の点滅が苦手な方はチェックを外してください。",
-					'flashing',
-					'bool',
-					true);
-				addOption(option);
-	
-				var option:Option = new Option('Camera Zooms',
-					"チェックを外すと、ビートヒット時にカメラがズームインしなくなります。",
-					'camZooms',
-					'bool',
-					true);
-				addOption(option);
-	
-				var option:Option = new Option('Score Text Zoom on Hit',
-					"チェックを外すと、音符を叩くたびにスコアの文字が拡大表示される機能を無効にします。",
-					'scoreZoom',
-					'bool',
-					true);
-				addOption(option);
-	
-				var option:Option = new Option('Health Bar Transparency',
-					'体力バーとアイコンはどの程度透過させるべきでしょうか。',
-					'healthBarAlpha',
-					'percent',
-					1);
-				option.scrollSpeed = 1.6;
-				option.minValue = 0.0;
-				option.maxValue = 1;
-				option.changeValue = 0.1;
-				option.decimals = 1;
-				addOption(option);
-				
-				#if !mobile
-				var option:Option = new Option('FPS Counter',
-					'チェックを外すと、FPSカウンターを非表示にします。',
-					'showFPS',
-					'bool',
-					true);
-				addOption(option);
-				option.onChange = onChangeFPSCounter;
-				#end
-				
-				var option:Option = new Option('Pause Screen Song:',
-					"ポーズ画面の曲は何がいいですか？",
-					'pauseMusic',
-					'string',
-					'Tea Time',
-					['None', 'Breakfast', 'Tea Time']);
-				addOption(option);
-				option.onChange = onChangePauseMusic;
-				
-				#if CHECK_FOR_UPDATES
-				var option:Option = new Option('Check for Updates',
-					'リリースビルドの場合、これをオンにすると、ゲーム起動時にアップデートを確認するようになります。',
-					'checkForUpdates',
-					'bool',
-					true);
-				addOption(option);
-				#end
-	
-				var option:Option = new Option('Combo Stacking',
-					"チェックを外すと、レーティングとコンボはスタックされず、システムメモリを節約し、読みやすくなります。",
-					'comboStacking',
-					'bool',
-					true);
-				addOption(option);
-	
-				var option:Option = new Option('Language:',
-					"現在、選択できる言語は英語と日本語の二種類だけです！",
-					'language',
-					'string',
-					'English',
-					['English','Japanese']);
-				addOption(option);
-			}
+		{
+			var option:Option = new Option('Note Splashes',
+				"チェックを外すと、「Sick!」ノーツを打ってもパーティクルが表示されなくなります。",
+				'noteSplashes',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Hide HUD',
+				'チェックすると、ほとんどのHUD要素を非表示にします。',
+				'hideHud',
+				'bool',
+				false);
+			addOption(option);
+			
+			var option:Option = new Option('Time Bar:',
+				"タイムバーには何を表示しますか？",
+				'timeBarType',
+				'string',
+				'Time Left',
+				['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
+			addOption(option);
+
+			var option:Option = new Option('Flashing Lights',
+				"光の点滅が苦手な方はチェックを外してください。",
+				'flashing',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Camera Zooms',
+				"チェックを外すと、ビートヒット時にカメラがズームインしなくなります。",
+				'camZooms',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Score Text Zoom on Hit',
+				"チェックを外すと、音符を叩くたびにスコアの文字が拡大表示される機能を無効にします。",
+				'scoreZoom',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Health Bar Transparency',
+				'体力バーとアイコンはどの程度透過させるべきでしょうか。',
+				'healthBarAlpha',
+				'percent',
+				1);
+			option.scrollSpeed = 1.6;
+			option.minValue = 0.0;
+			option.maxValue = 1;
+			option.changeValue = 0.1;
+			option.decimals = 1;
+			addOption(option);
+			
+			#if !mobile
+			var option:Option = new Option('Show FPS',
+				'チェックを外すと、FPSカウンターを非表示にします。',
+				'showFPS',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Show Memory Usage',
+				'チェックを外すと、メモリ使用量を非表示にします。',
+				'showMemory',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Show Memory Heap',
+				'チェックを外すと、最大メモリ使用量を非表示にします。',
+				'showMemoryHeap',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Show Version',
+				'チェックを外すと、バージョンを非表示にします。',
+				'showVersion',
+				'bool',
+				true);
+			addOption(option);
+			#end
+			
+			var option:Option = new Option('Pause Screen Song:',
+				"ポーズ画面の曲は何がいいですか？",
+				'pauseMusic',
+				'string',
+				'Tea Time',
+				['None', 'Breakfast', 'Tea Time']);
+			addOption(option);
+			option.onChange = onChangePauseMusic;
+			
+			#if CHECK_FOR_UPDATES
+			var option:Option = new Option('Check for Updates',
+				'リリースビルドの場合、これをオンにすると、ゲーム起動時にアップデートを確認するようになります。',
+				'checkForUpdates',
+				'bool',
+				true);
+			addOption(option);
+			#end
+
+			var option:Option = new Option('Combo Stacking',
+				"チェックを外すと、レーティングとコンボはスタックされず、システムメモリを節約し、読みやすくなります。",
+				'comboStacking',
+				'bool',
+				true);
+			addOption(option);
+
+			var option:Option = new Option('Language:',
+				"現在、選択できる言語は英語と日本語の二種類だけです！",
+				'language',
+				'string',
+				'English',
+				['English','Japanese']);
+			addOption(option);
+		}
 
 		super();
 	}
@@ -256,6 +296,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		super.destroy();
 	}
 
+	/*
 	#if !mobile
 	function onChangeFPSCounter()
 	{
@@ -263,4 +304,5 @@ class VisualsUISubState extends BaseOptionsMenu
 			Main.fpsVar.visible = ClientPrefs.showFPS;
 	}
 	#end
+	*/
 }

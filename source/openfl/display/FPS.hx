@@ -31,6 +31,7 @@ class FPS extends TextField
 		The current frame rate, expressed using frames-per-second
 	**/
 	public var currentFPS(default, null):Int;
+	public var count(default, null):Int;
 	public var memoryMegas(default, null):Float;
 	public var maxmemory(default, null):Float;
 
@@ -46,6 +47,7 @@ class FPS extends TextField
 		this.y = y;
 
 		currentFPS = 0;
+		count = 0;
 		memoryMegas = 0;
 		maxmemory = 0;
 		selectable = false;
@@ -84,21 +86,48 @@ class FPS extends TextField
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
 		if (currentFPS > ClientPrefs.framerate) currentFPS = ClientPrefs.framerate;
 
-		if (currentCount != cacheCount /*&& visible*/)
+		if (currentCount != cacheCount)
 		{
-			text = "FPS: " + currentFPS;
+			if (ClientPrefs.showFPS){
+				text = "FPS: " + currentFPS;
+				count++;
+			}
 			
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory: " + memoryMegas + " MB";
+
+			if (count != 0){
+				text += "\n";
+			}
+
+			if (ClientPrefs.showMemory){
+				text += "Memory: " + memoryMegas + " MB";
+				count++;
+			}
 			
 			if (memoryMegas > maxmemory)
 			{
 				maxmemory = memoryMegas;
 			}
 
-			text += "\nMemoryHeap: "+ maxmemory + " MB";
+			if (count != 0){
+				text += "\n";
+			}
+
+			if (ClientPrefs.showMemoryHeap){
+				text += "MemoryHeap: "+ maxmemory + " MB";
+				count++; 
+			}
 			#end
+
+			if (count != 0){
+				text += "\n";
+			}
+			
+			if (ClientPrefs.showVersion){
+				text += "nekoEngine v"+ MainMenuState.nekoEngineVersion;
+				count++;
+			}
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
@@ -113,6 +142,7 @@ class FPS extends TextField
 			#end
 
 			text += "\n";
+			count = 0;
 		}
 
 		cacheCount = currentCount;
