@@ -176,6 +176,7 @@ class PlayState extends MusicBeatState
 
 	public var gfSpeed:Int = 1;
 	public var health:Float = 1;
+	public var maxcombo:Int = 0;
 	public var combo:Int = 0;
 
 	private var healthBarBG:AttachedSprite;
@@ -2285,6 +2286,7 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
+		+ ' | Combo: ' + combo + " / "+ maxcombo
 		+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
@@ -2408,7 +2410,7 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 		else
 			vocals = new FlxSound();
-
+		
 		FlxG.sound.list.add(vocals);
 		FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
 
@@ -4651,6 +4653,7 @@ class PlayState extends MusicBeatState
 			{
 				combo += 1;
 				if(combo > 9999) combo = 9999;
+				if(maxcombo < combo) maxcombo = combo;
 				popUpScore(note);
 			}
 			health += note.hitHealth * healthGain;

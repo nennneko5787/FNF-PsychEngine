@@ -209,6 +209,8 @@ class FunkinLua {
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
 
+		set('language', ClientPrefs.language);
+
 		#if windows
 		set('buildTarget', 'windows');
 		#elseif linux

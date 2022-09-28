@@ -153,6 +153,13 @@ class VisualsUISubState extends BaseOptionsMenu
 				'English',
 				['English','Japanese']);
 			addOption(option);
+
+			var option:Option = new Option('Free Play Auto song playback',
+				"If checked, the song will play automatically during free play." ,
+				'freeplayAutoPlaySong',
+				'bool',
+				false);
+			addOption(option);
 		}
 
 		if (ClientPrefs.language == "Japanese")
@@ -273,6 +280,13 @@ class VisualsUISubState extends BaseOptionsMenu
 				'string',
 				'English',
 				['English','Japanese']);
+			addOption(option);
+
+			var option:Option = new Option('Free Play Auto song playback',
+				"チェックをつけると、フリープレイ時に曲が自動再生されます。",
+				'freeplayAutoPlaySong',
+				'bool',
+				false);
 			addOption(option);
 		}
 
