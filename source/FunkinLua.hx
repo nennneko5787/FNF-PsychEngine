@@ -211,6 +211,8 @@ class FunkinLua {
 
 		set('language', ClientPrefs.language);
 
+		set('songPos', Conductor.songPosition);
+
 		#if windows
 		set('buildTarget', 'windows');
 		#elseif linux
