@@ -20,11 +20,14 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'GamePlay Options', 'Exit to menu'];
 	var difficultyChoices = [];
+	var gameplayOptions:Array<String> = ['Instakill on Miss', 'Practice Mode', 'Botplay'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
+	var instakillText:FlxText;
+	var botplayText:FlxText;
 	var practiceText:FlxText;
 	var skipTimeText:FlxText;
 	var skipTimeTracker:Alphabet;
@@ -49,8 +52,8 @@ class PauseSubState extends MusicBeatSubstate
 				menuItemsOG.insert(3, 'Skip Time');
 			}
 			menuItemsOG.insert(3 + num, 'End Song');
-			menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
-			menuItemsOG.insert(5 + num, 'Toggle Botplay');
+			//menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
+			//menuItemsOG.insert(5 + num, 'Toggle Botplay');
 		}
 		menuItems = menuItemsOG;
 
@@ -60,6 +63,7 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		difficultyChoices.push('BACK');
 
+		gameplayOptions.push('BACK');
 
 		pauseMusic = new FlxSound();
 		if(songName != null) {
@@ -98,13 +102,29 @@ class PauseSubState extends MusicBeatSubstate
 		blueballedTxt.updateHitbox();
 		add(blueballedTxt);
 
-		practiceText = new FlxText(20, 15 + 101, 0, "PRACTICE MODE", 32);
+		instakillText = new FlxText(20, 15 + 101, 0, "INSTANT ON KILL", 32);
+		instakillText.scrollFactor.set();
+		instakillText.setFormat(Paths.font('vcr.ttf'), 32);
+		instakillText.x = FlxG.width - (instakillText.width + 20);
+		instakillText.updateHitbox();
+		instakillText.visible = PlayState.instance.instakillOnMiss;
+		add(instakillText);
+
+		practiceText = new FlxText(20, 15 + 133, 0, "PRACTICE MODE", 32);
 		practiceText.scrollFactor.set();
 		practiceText.setFormat(Paths.font('vcr.ttf'), 32);
 		practiceText.x = FlxG.width - (practiceText.width + 20);
 		practiceText.updateHitbox();
 		practiceText.visible = PlayState.instance.practiceMode;
 		add(practiceText);
+
+		botplayText = new FlxText(20, 15 + 165, 0, "BOTPLAY", 32);
+		botplayText.scrollFactor.set();
+		botplayText.setFormat(Paths.font('vcr.ttf'), 32);
+		botplayText.x = FlxG.width - (botplayText.width + 20);
+		botplayText.updateHitbox();
+		botplayText.visible = PlayState.instance.cpuControlled;
+		add(botplayText);
 
 		var chartingText:FlxText = new FlxText(20, 15 + 101, 0, "CHARTING MODE", 32);
 		chartingText.scrollFactor.set();
@@ -210,6 +230,29 @@ class PauseSubState extends MusicBeatSubstate
 				regenMenu();
 			}
 
+			if (menuItems == gameplayOptions)
+			{
+				switch (daSelected)
+				{
+					case 'Instakill on Miss':
+						PlayState.instance.instakillOnMiss = !PlayState.instance.instakillOnMiss;
+						PlayState.changedDifficulty = true;
+						instakillText.visible = PlayState.instance.instakillOnMiss;
+					case 'Practice Mode':
+						PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
+						PlayState.changedDifficulty = true;
+						practiceText.visible = PlayState.instance.practiceMode;
+					case 'Botplay':
+						PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
+						PlayState.changedDifficulty = true;
+						botplayText.visible = PlayState.instance.cpuControlled;
+					case 'BACK':
+						menuItems = menuItemsOG;
+						deleteSkipTimeText();
+						regenMenu();
+				}
+			}
+
 			switch (daSelected)
 			{
 				case "Resume":
@@ -218,10 +261,12 @@ class PauseSubState extends MusicBeatSubstate
 					menuItems = difficultyChoices;
 					deleteSkipTimeText();
 					regenMenu();
+				/*
 				case 'Toggle Practice Mode':
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
+				*/
 				case "Restart Song":
 					restartSong();
 				case "Leave Charting Mode":
@@ -245,12 +290,10 @@ class PauseSubState extends MusicBeatSubstate
 				case "End Song":
 					close();
 					PlayState.instance.finishSong(true);
-				case 'Toggle Botplay':
-					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
-					PlayState.changedDifficulty = true;
-					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
-					PlayState.instance.botplayTxt.alpha = 1;
-					PlayState.instance.botplaySine = 0;
+				case 'GamePlay Options':
+					menuItems = gameplayOptions;
+					deleteSkipTimeText();
+					regenMenu();
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;

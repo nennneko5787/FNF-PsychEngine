@@ -384,8 +384,10 @@ class FreeplayState extends MusicBeatState
 			}
 
 			FlxG.sound.music.volume = 0;
-					
-			destroyFreeplayVocals();
+
+			if (ClientPrefs.freeplayAutoPlaySong){
+				destroyFreeplayVocals();
+			}
 		}
 		else if(controls.RESET)
 		{

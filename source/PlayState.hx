@@ -266,8 +266,15 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+
+	var allNotesMs:Float = 0;
+	var averageMs:Float = 0;
+
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
+
+	var msTimeTxt:FlxText = null;
+	var timeShown:Int = 0;
 
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
@@ -4252,20 +4259,90 @@ class PlayState extends MusicBeatState
 		coolText.text = Std.string(seperatedScore);
 		// add(coolText);
 
-		FlxTween.tween(rating, {alpha: 0}, 0.2, {
-			startDelay: Conductor.crochet * 0.001
-		});
+		if (ClientPrefs.msTiming == true)
+		{
+			allNotesMs += noteDiff;
+			averageMs = allNotesMs/songHits;
 
-		FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
-			onComplete: function(tween:FlxTween)
+			remove(msTimeTxt);
+			msTimeTxt = new FlxText(0, 0, 0, "0ms");
+			timeShown = 0;
+			switch (daRating.name)
 			{
-				coolText.destroy();
-				comboSpr.destroy();
+				case 'shit' | 'bad':
+					msTimeTxt.color = FlxColor.RED;
+				case 'good':
+					msTimeTxt.color = FlxColor.GREEN;
+				case 'sick':
+					msTimeTxt.color = FlxColor.CYAN;
+			}
+			msTimeTxt.borderStyle = OUTLINE;
+			msTimeTxt.borderSize = 1;
+			msTimeTxt.borderColor = FlxColor.BLACK;
+			msTimeTxt.text = Std.string(Math.round(noteDiff)) + "ms";
+			msTimeTxt.size = 20;
 
-				rating.destroy();
-			},
-			startDelay: Conductor.crochet * 0.002
-		});
+			if (msTimeTxt.alpha != 1)
+				msTimeTxt.alpha = 1;
+
+			add(msTimeTxt);
+
+			msTimeTxt.screenCenter();
+			msTimeTxt.x = comboSpr.x + 100;
+			msTimeTxt.y = rating.y + 100;
+			msTimeTxt.acceleration.y = 600;
+			msTimeTxt.velocity.y -= 150;
+
+			msTimeTxt.velocity.x += comboSpr.velocity.x;
+
+			msTimeTxt.updateHitbox();
+
+			msTimeTxt.cameras = [camHUD];
+		}
+
+		if (ClientPrefs.msTiming == true)
+		{
+			FlxTween.tween(rating, {alpha: 0}, 0.2, {
+				startDelay: Conductor.crochet * 0.001,
+					onUpdate: function(tween:FlxTween)
+					{
+						if (msTimeTxt != null)
+							msTimeTxt.alpha -= 0.02;
+						timeShown++;
+					}
+			});
+
+			FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					coolText.destroy();
+					comboSpr.destroy();
+					if (msTimeTxt != null && timeShown >= 20 && ClientPrefs.msTiming == true)
+					{
+						remove(msTimeTxt);
+						msTimeTxt = null;
+					}
+					rating.destroy();
+				},
+				startDelay: Conductor.crochet * 0.002
+			});
+		}else{
+			FlxTween.tween(rating, {alpha: 0}, 0.2, {
+				startDelay: Conductor.crochet * 0.001,
+			});
+
+			FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					coolText.destroy();
+					comboSpr.destroy();
+
+					rating.destroy();
+				},
+				startDelay: Conductor.crochet * 0.002
+			});
+		}
+
 	}
 
 	public var strumsBlocked:Array<Bool> = [];

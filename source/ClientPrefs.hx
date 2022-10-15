@@ -93,6 +93,7 @@ class ClientPrefs {
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
 	public static var freeplayAutoPlaySong:Bool = false;
+	public static var msTiming:Bool = true;
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
@@ -141,6 +142,7 @@ class ClientPrefs {
 		FlxG.save.data.comboStacking = comboStacking;
 		FlxG.save.data.language = language;
 		FlxG.save.data.freeplayAutoPlaySong = freeplayAutoPlaySong;
+		FlxG.save.data.msTiming = msTiming;
 	
 		FlxG.save.flush();
 
@@ -305,6 +307,10 @@ class ClientPrefs {
 		if (FlxG.save.data.freeplayAutoPlaySong != null)
 		{
 			freeplayAutoPlaySong = FlxG.save.data.freeplayAutoPlaySong;
+		}
+		if (FlxG.save.data.msTiming != null)
+		{
+			msTiming = FlxG.save.data.msTiming;
 		}
 	}
 
