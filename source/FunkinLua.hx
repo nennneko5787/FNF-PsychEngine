@@ -52,6 +52,8 @@ import hscript.Interp;
 import hscript.Expr;
 #end
 
+import flash.system.System; //Funkin_End(Lua)
+
 #if desktop
 import Discord;
 #end
@@ -2753,6 +2755,11 @@ class FunkinLua {
 			}
 			#end
 			return list;
+		});
+
+		Lua_helper.add_callback(lua, "funkin_end", function() {
+			System.exit(0);
+			return;
 		});
 
 		call('onCreate', []);
