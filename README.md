@@ -73,6 +73,5 @@ You can use all the features of the Psych Engine and some of the following
 * Japanese language support
 * Support for Psych Engine mods
 ## Items to be added in the future
-* Fixed display of milliseconds when a note is hit.
 * Fixed support for 1~21 key notation
 * Make it possible to hit opponent's notes
