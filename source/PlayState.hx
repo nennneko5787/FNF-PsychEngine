@@ -4269,8 +4269,10 @@ class PlayState extends MusicBeatState
 			timeShown = 0;
 			switch (daRating.name)
 			{
-				case 'shit' | 'bad':
+				case 'shit':
 					msTimeTxt.color = FlxColor.RED;
+				case 'bad':
+					msTimeTxt.color = FlxColor.ORANGE;
 				case 'good':
 					msTimeTxt.color = FlxColor.GREEN;
 				case 'sick':
@@ -4279,7 +4281,7 @@ class PlayState extends MusicBeatState
 			msTimeTxt.borderStyle = OUTLINE;
 			msTimeTxt.borderSize = 1;
 			msTimeTxt.borderColor = FlxColor.BLACK;
-			msTimeTxt.text = Std.string(Math.round(noteDiff)) + "ms";
+			msTimeTxt.text = Std.string(Math.round(Conductor.songPosition + ClientPrefs.ratingOffset - note.strumTime)) + "ms";
 			msTimeTxt.size = 20;
 
 			if (msTimeTxt.alpha != 1)
