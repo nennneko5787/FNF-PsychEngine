@@ -160,13 +160,6 @@ class VisualsUISubState extends BaseOptionsMenu
 				'bool',
 				false);
 			addOption(option);
-
-			var option:Option = new Option('Milliseconds display when a note is struck',
-				"If unchecked, the milliseconds display when a note is hit is hidden." ,
-				'msTiming',
-				'bool',
-				true);
-			addOption(option);
 		}
 
 		if (ClientPrefs.language == "Japanese")
@@ -294,13 +287,6 @@ class VisualsUISubState extends BaseOptionsMenu
 				'freeplayAutoPlaySong',
 				'bool',
 				false);
-			addOption(option);
-
-			var option:Option = new Option('Milliseconds display when a note is struck',
-				"チェックを外した場合、ノーツを打ったときのミリ秒表示が非表示になります。" ,
-				'msTiming',
-				'bool',
-				true);
 			addOption(option);
 		}
 

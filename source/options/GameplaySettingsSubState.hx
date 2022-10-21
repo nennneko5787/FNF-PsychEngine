@@ -36,13 +36,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		if (ClientPrefs.language == "English")
 		{
-			var option:Option = new Option('Controller Mode',
-				'Check this if you want to play with\na controller instead of using your Keyboard.',
-				'controllerMode',
-				'bool',
-				false);
-			addOption(option);
-
 			//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 			var option:Option = new Option('Downscroll', //Name
 				'If checked, notes go Down instead of Up, simple enough.', //Description
@@ -146,17 +139,17 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			option.maxValue = 10;
 			option.changeValue = 0.1;
 			addOption(option);
+
+			var option:Option = new Option('Milliseconds display when a note is struck',
+				"If unchecked, the milliseconds display when a note is hit is hidden." ,
+				'msTiming',
+				'bool',
+				true);
+			addOption(option);
 		}
 
 		if (ClientPrefs.language == "Japanese")
 		{
-				var option:Option = new Option('Controller Mode',
-				'キーボードではなく、コントローラーでプレイしたい場合は、ここにチェックを入れてください。',
-				'controllerMode',
-				'bool',
-				false);
-			addOption(option);
-
 			//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 			var option:Option = new Option('Downscroll', //Name
 				'チェックすると、ノーツは上から流れる、簡単なことです。', //Description
@@ -259,6 +252,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			option.minValue = 2;
 			option.maxValue = 10;
 			option.changeValue = 0.1;
+			addOption(option);
+
+			var option:Option = new Option('Milliseconds display when a note is struck',
+				"チェックを外した場合、ノーツを打ったときのミリ秒表示が非表示になります。" ,
+				'msTiming',
+				'bool',
+				true);
 			addOption(option);
 		}
 

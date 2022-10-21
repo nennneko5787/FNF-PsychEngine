@@ -88,6 +88,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		ClientPrefs.loadPrefs();
+		
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -131,8 +133,6 @@ class TitleState extends MusicBeatState
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
-		ClientPrefs.loadPrefs();
-
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.checkForUpdates && !closedState) {
 			trace('checking for update');
@@ -143,7 +143,7 @@ class TitleState extends MusicBeatState
 				updateVersion = data.split('\n')[0].trim();
 				var curVersion:String = MainMenuState.nekoEngineVersion.trim();
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
-				if(updateVersion != curVersion) {
+				if(Std.parseFloat(updateVersion) > Std.parseFloat(curVersion)) {
 					trace('versions arent matching!');
 					mustUpdate = true;
 				}
