@@ -42,15 +42,6 @@ class ControllerSettingsSubState extends BaseOptionsMenu
 				'bool',
 				false);
 			addOption(option);
-
-            #if !switch
-            var option:Option = new Option('NS Pro Controller Mode',
-                'Reverses the AB and XY buttons on the controller, respectively.' ,
-                'nsProConMode',
-                'bool',
-                false);
-            addOption(option);
-            #end
 		}
 
 		if (ClientPrefs.language == "Japanese")
@@ -61,15 +52,6 @@ class ControllerSettingsSubState extends BaseOptionsMenu
                 'bool',
                 false);
             addOption(option);
-
-            #if !switch
-            var option:Option = new Option('NS Pro Controller Mode',
-                'コントローラーのABボタン、XYボタンをそれぞれ反転させます。',
-                'nsProConMode',
-                'bool',
-                false);
-            addOption(option);
-            #end
 		}
 
 		super();

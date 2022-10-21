@@ -88,8 +88,6 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		ClientPrefs.loadPrefs();
-		
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
@@ -132,6 +130,8 @@ class TitleState extends MusicBeatState
 		super.create();
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
+
+		ClientPrefs.loadPrefs();
 
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.checkForUpdates && !closedState) {

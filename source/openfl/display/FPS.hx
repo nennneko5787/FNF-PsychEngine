@@ -93,7 +93,7 @@ class FPS extends TextField
 				count++;
 			}
 			
-			#if openfl
+			#if (openfl && !html5)
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 
 			if (count != 0){

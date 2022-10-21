@@ -94,7 +94,6 @@ class ClientPrefs {
 
 	public static var freeplayAutoPlaySong:Bool = false;
 	public static var msTiming:Bool = true;
-	public static var nsProConMode:Bool = false;
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
@@ -144,7 +143,6 @@ class ClientPrefs {
 		FlxG.save.data.language = language;
 		FlxG.save.data.freeplayAutoPlaySong = freeplayAutoPlaySong;
 		FlxG.save.data.msTiming = msTiming;
-		FlxG.save.data.nsProConMode = nsProConMode;
 	
 		FlxG.save.flush();
 
@@ -313,10 +311,6 @@ class ClientPrefs {
 		if (FlxG.save.data.msTiming != null)
 		{
 			msTiming = FlxG.save.data.msTiming;
-		}
-		if (FlxG.save.data.nsProConMode != null)
-		{
-			nsProConMode = FlxG.save.data.nsProConMode;
 		}
 	}
 
