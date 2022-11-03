@@ -2,7 +2,7 @@
 name: Bug Report(Need assistance in English)
 about: Create a report to help us improve
 title: Bug Report(Need assistance in English)
-labels: bug, Support in English
+labels: bug, Support in English, 日本語でのサポート
 assignees: ''
 
 ---
