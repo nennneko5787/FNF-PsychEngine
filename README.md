@@ -41,6 +41,7 @@ To build the Windows version, download the [Visual Studio 2019 installer](https:
 * MSVC v142 - VS 2019 C++ x64/x86 build tools
 * Windows SDK (10.0.17763.0)
 
+To build the Windows version, use the
 <pre>
 lime build windows
 </pre>

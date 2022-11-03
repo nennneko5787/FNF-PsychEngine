@@ -42,6 +42,7 @@ Windows版をビルドするには、[Visual Studio 2019のインストーラー
 * MSVC v142 - VS 2019 C++ x64/x86 ビルドツール
 * Windows SDK (10.0.17763.0)
 
+Windows版をビルドするには、
 <pre>
 lime build windows
 </pre>を実行します。
