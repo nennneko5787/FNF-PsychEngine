@@ -14,6 +14,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
+import lime.app.Application;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -242,10 +243,13 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 						PlayState.changedDifficulty = true;
 						practiceText.visible = PlayState.instance.practiceMode;
+						PlayState.doNotSaveScores = true;
 					case 'Botplay':
 						PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 						PlayState.changedDifficulty = true;
 						botplayText.visible = PlayState.instance.cpuControlled;
+						PlayState.botplayTxt.visible = PlayState.instance.cpuControlled;
+						PlayState.doNotSaveScores = true;
 					case 'BACK':
 						menuItems = menuItemsOG;
 						deleteSkipTimeText();
@@ -308,6 +312,9 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
+					#if desktop
+					Application.current.window.title = "Friday Night Funkin': nekoEngine";
+					#end
 			}
 		}
 	}

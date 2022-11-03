@@ -36,6 +36,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		if (ClientPrefs.language == "English")
 		{
+			var option:Option = new Option('Controller Mode',
+				'Check this if you want to play with\na controller instead of using your Keyboard.',
+				'controllerMode',
+				'bool',
+				false);
+			addOption(option);
+
 			//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 			var option:Option = new Option('Downscroll', //Name
 				'If checked, notes go Down instead of Up, simple enough.', //Description
@@ -140,9 +147,17 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			option.changeValue = 0.1;
 			addOption(option);
 
-			var option:Option = new Option('Milliseconds display when a note is struck',
-				"If unchecked, the milliseconds display when a note is hit is hidden." ,
+			var option:Option = new Option('Milliseconds:',
+				"How do I display milliseconds?" ,
 				'msTiming',
+				'string',
+				'detailed display',
+				['I don\'t want it','simplified view','detailed display']);
+			addOption(option);
+
+			var option:Option = new Option('judgementCounter',
+				"If unchecked, the Judgment counter is turned off." ,
+				'judgementCounter',
 				'bool',
 				true);
 			addOption(option);
@@ -150,6 +165,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		if (ClientPrefs.language == "Japanese")
 		{
+            var option:Option = new Option('Controller Mode',
+                'キーボードではなく、コントローラーでプレイしたい場合は、ここにチェックを入れてください。',
+                'controllerMode',
+                'bool',
+                false);
+            addOption(option);
+			
 			//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 			var option:Option = new Option('Downscroll', //Name
 				'チェックすると、ノーツは上から流れる、簡単なことです。', //Description
@@ -254,9 +276,17 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			option.changeValue = 0.1;
 			addOption(option);
 
-			var option:Option = new Option('Milliseconds display when a note is struck',
-				"チェックを外した場合、ノーツを打ったときのミリ秒表示が非表示になります。" ,
+			var option:Option = new Option('Milliseconds:',
+				"ミリ秒表示はどのようにすればいい?" ,
 				'msTiming',
+				'string',
+				'detailed display',
+				['I don\'t want it','simplified view','detailed display']);
+			addOption(option);
+
+			var option:Option = new Option('judgementCounter',
+				"チェックを外すと、ジャッジメントカウンターがオフになります。" ,
+				'judgementCounter',
 				'bool',
 				true);
 			addOption(option);

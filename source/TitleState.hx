@@ -284,7 +284,7 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpinNeko');
+		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
@@ -563,13 +563,6 @@ class TitleState extends MusicBeatState
 					}
 				}
 			}
-			#else
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
-			{
-				if (FlxG.keys.justPressed.F){
-					FlxG.fullscreen = !FlxG.fullscreen;
-				}
-			}
 			#end
 		}
 
@@ -582,6 +575,10 @@ class TitleState extends MusicBeatState
 		{
 			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
 			if(controls.UI_RIGHT) swagShader.hue += elapsed * 0.1;
+		}
+
+		if (FlxG.keys.justPressed.F){
+			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 
 		super.update(elapsed);

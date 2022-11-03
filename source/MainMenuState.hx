@@ -25,7 +25,11 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
+	#if !debug
 	public static var nekoEngineVersion:String = '0.0.2'; //This is also used for Discord RPC
+	#else
+	public static var nekoEngineVersion:String = 'Debug'; //This is also used for Discord RPC
+	#end
 	public static var psychEngineVersion:String = '0.6.2'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -131,7 +135,11 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
+		#if !debug
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "nekoEngine v" + nekoEngineVersion, 12);
+		#else
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "nekoEngine " + nekoEngineVersion, 12);
+		#end
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

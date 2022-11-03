@@ -36,7 +36,6 @@ class ClientPrefs {
 	public static var pauseMusic:String = 'Tea Time';
 	public static var checkForUpdates:Bool = true;
 	public static var comboStacking = true;
-	public static var language:String = 'English';
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'scrolltype' => 'multiplicative', 
@@ -54,8 +53,7 @@ class ClientPrefs {
 		'healthloss' => 1.0,
 		'instakill' => false,
 		'practice' => false,
-		'botplay' => false,
-		'opponentplay' => false
+		'botplay' => false
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -92,8 +90,11 @@ class ClientPrefs {
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
+	public static var language:String = 'English';
 	public static var freeplayAutoPlaySong:Bool = false;
-	public static var msTiming:Bool = true;
+	public static var msTiming:String = "detailed display";
+	public static var sizeofFPSDisplayArea:Int = 14;
+	public static var judgementCounter:Bool = true;
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
@@ -143,6 +144,8 @@ class ClientPrefs {
 		FlxG.save.data.language = language;
 		FlxG.save.data.freeplayAutoPlaySong = freeplayAutoPlaySong;
 		FlxG.save.data.msTiming = msTiming;
+		FlxG.save.data.sizeofFPSDisplayArea = sizeofFPSDisplayArea;
+		FlxG.save.data.judgementCounter = judgementCounter;
 	
 		FlxG.save.flush();
 
@@ -311,6 +314,14 @@ class ClientPrefs {
 		if (FlxG.save.data.msTiming != null)
 		{
 			msTiming = FlxG.save.data.msTiming;
+		}
+		if (FlxG.save.data.sizeofFPSDisplayArea != null)
+		{
+			sizeofFPSDisplayArea = FlxG.save.data.sizeofFPSDisplayArea;
+		}
+		if (FlxG.save.data.judgementCounter != null)
+		{
+			judgementCounter = FlxG.save.data.judgementCounter;
 		}
 	}
 

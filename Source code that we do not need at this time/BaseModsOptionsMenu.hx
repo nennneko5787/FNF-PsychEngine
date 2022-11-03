@@ -1,16 +1,8 @@
 package options;
 
 #if desktop
-import lime.app.Application;
-import openfl.events.UncaughtErrorEvent;
-import haxe.CallStack;
-import haxe.io.Path;
 import Discord.DiscordClient;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
 #end
-
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -33,9 +25,20 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
+import flixel.FlxObject;
+import flixel.FlxCamera;
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.effects.FlxFlicker;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import lime.app.Application;
+import sys.io.File;
+import sys.FileSystem;
+import haxe.format.JsonParser;
+
 using StringTools;
 
-class BaseOptionsMenu extends MusicBeatSubstate
+class BaseModsOptionsMenu extends MusicBeatSubstate
 {
 	private var curOption:Option = null;
 	private var curSelected:Int = 0;
@@ -52,22 +55,19 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	public var title:String;
 	public var rpcTitle:String;
 
-	public var reboot:Bool = false;
-	private var msg:String = "";
-
 	public function new()
 	{
 		super();
 
-		if(title == null) title = 'Options';
-		if(rpcTitle == null) rpcTitle = 'Options Menu';
+		if(title == null) title = 'Mods Options';
+		if(rpcTitle == null) rpcTitle = 'Mods Options Menu';
 		
 		#if desktop
 		DiscordClient.changePresence(rpcTitle, null);
 		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
+		bg.color = ModsMenuState.mods[curSelected].color;
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
@@ -163,18 +163,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 
 		if (controls.BACK) {
-			close();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			#if desktop
-			if (reboot == true)
-			{
-				FlxG.fullscreen = false;
-				msg += "\nChanged settings that require a reboot. Exit.";
-				Application.current.window.alert(msg, "Notice");
-				DiscordClient.shutdown();
-				Sys.exit(1);
-			}
-			#end
+			close();
 		}
 
 		if(nextAccept <= 0)

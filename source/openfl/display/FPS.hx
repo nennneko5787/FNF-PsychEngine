@@ -52,7 +52,7 @@ class FPS extends TextField
 		maxmemory = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_sans", 14, color);
+		defaultTextFormat = new TextFormat("_sans", ClientPrefs.sizeofFPSDisplayArea, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
@@ -115,7 +115,7 @@ class FPS extends TextField
 			}
 
 			if (ClientPrefs.showMemoryHeap){
-				text += "MemoryHeap: "+ maxmemory + " MB";
+				text += "MemoryPeak: "+ maxmemory + " MB";
 				count++; 
 			}
 			#end
@@ -125,7 +125,11 @@ class FPS extends TextField
 			}
 			
 			if (ClientPrefs.showVersion){
+				#if !debug
 				text += "nekoEngine v"+ MainMenuState.nekoEngineVersion;
+				#else
+				text += "nekoEngine "+ MainMenuState.nekoEngineVersion;
+				#end
 				count++;
 			}
 

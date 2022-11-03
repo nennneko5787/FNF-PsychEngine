@@ -384,10 +384,8 @@ class FreeplayState extends MusicBeatState
 			}
 
 			FlxG.sound.music.volume = 0;
-
-			if (ClientPrefs.freeplayAutoPlaySong){
-				destroyFreeplayVocals();
-			}
+					
+			destroyFreeplayVocals();
 		}
 		else if(controls.RESET)
 		{
@@ -525,7 +523,7 @@ class FreeplayState extends MusicBeatState
 			curDifficulty = newPos;
 		}
 
-		if(instPlaying != curSelected && ClientPrefs.freeplayAutoPlaySong)
+		if(instPlaying != curSelected && ClientPrefs.freeplayAutoPlaySong == true)
 		{
 			#if PRELOAD_ALL
 			destroyFreeplayVocals();

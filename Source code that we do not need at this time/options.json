@@ -1,0 +1,6 @@
+{
+	"optionName": ["Dummy1","Dummy2"],
+	"optionDesc": ["Dummy1","Dummy2"],
+	"optionVar": ["dummy1","dummy2"],
+	"optionType": ["bool","bool"]
+}

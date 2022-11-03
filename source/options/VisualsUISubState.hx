@@ -1,8 +1,16 @@
 package options;
 
 #if desktop
+import lime.app.Application;
+import openfl.events.UncaughtErrorEvent;
+import haxe.CallStack;
+import haxe.io.Path;
 import Discord.DiscordClient;
+import sys.FileSystem;
+import sys.io.File;
+import sys.io.Process;
 #end
+
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -91,6 +99,18 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.decimals = 1;
 			addOption(option);
 			
+			#if (!mobile && !html5)
+			var option:Option = new Option('Size of FPS display area',
+				'What size should the FPS display area be?' ,
+				'sizeofFPSDisplayArea',
+				'int',
+				14);
+			option.minValue = 1;
+			option.changeValue = 1;
+			option.displayFormat = '%v px';
+			addOption(option);
+			option.onChange = onChangesizeofFPSDisplayArea;
+			#end
 			#if !mobile
 			var option:Option = new Option('Show FPS',
 				'If unchecked, hide the FPS counter.' ,
@@ -98,7 +118,8 @@ class VisualsUISubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
-
+			#end
+			#if (!mobile && !html5)
 			var option:Option = new Option('Show Memory Usage',
 				'If unchecked, hide memory usage.' ,
 				'showMemory',
@@ -112,7 +133,8 @@ class VisualsUISubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
-
+			#end
+			#if !mobile
 			var option:Option = new Option('Show Version',
 				'If unchecked, hide the version.' ,
 				'showVersion',
@@ -220,6 +242,17 @@ class VisualsUISubState extends BaseOptionsMenu
 			addOption(option);
 			
 			#if !mobile
+			var option:Option = new Option('Size of FPS display area',
+				'FPS表示部分のサイズはどのくらいがいいでしょうか？',
+				'sizeofFPSDisplayArea',
+				'int',
+				14);
+			option.minValue = 1;
+			option.changeValue = 1;
+			option.displayFormat = '%v px';
+			addOption(option);
+			option.onChange = onChangesizeofFPSDisplayArea;
+
 			var option:Option = new Option('Show FPS',
 				'チェックを外すと、FPSカウンターを非表示にします。',
 				'showFPS',
@@ -310,13 +343,17 @@ class VisualsUISubState extends BaseOptionsMenu
 		super.destroy();
 	}
 
-	/*
 	#if !mobile
+	function onChangesizeofFPSDisplayArea()
+	{
+		reboot = true;
+	}
+	/*
 	function onChangeFPSCounter()
 	{
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.showFPS;
 	}
-	#end
 	*/
+	#end
 }
