@@ -1,16 +1,8 @@
 package options;
 
 #if desktop
-import lime.app.Application;
-import openfl.events.UncaughtErrorEvent;
-import haxe.CallStack;
-import haxe.io.Path;
 import Discord.DiscordClient;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
 #end
-
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -52,9 +44,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	public var title:String;
 	public var rpcTitle:String;
 
-	public var reboot:Bool = false;
-	private var msg:String = "";
-
 	public function new()
 	{
 		super();
@@ -93,14 +82,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		add(titleText);
 
 		descText = new FlxText(50, 600, 1180, "", 32);
-		if (ClientPrefs.language == "English")
-		{
-			descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		}
-		if (ClientPrefs.language == "Japanese")
-		{
-			descText.setFormat(Paths.font("vcr_ja.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		}
+		if (ClientPrefs.language == 'English') descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (ClientPrefs.language == 'Japanese') descText.setFormat(Paths.font("vcr_ja.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);
@@ -163,18 +146,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 
 		if (controls.BACK) {
+			ClientPrefs.saveSettings();
 			close();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			#if desktop
-			if (reboot == true)
-			{
-				FlxG.fullscreen = false;
-				msg += "\nChanged settings that require a reboot. Exit.";
-				Application.current.window.alert(msg, "Notice");
-				DiscordClient.shutdown();
-				Sys.exit(1);
-			}
-			#end
 		}
 
 		if(nextAccept <= 0)

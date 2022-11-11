@@ -95,6 +95,7 @@ class ClientPrefs {
 	public static var msTiming:String = "detailed display";
 	public static var sizeofFPSDisplayArea:Int = 14;
 	public static var judgementCounter:Bool = true;
+	public static var richPresence:Bool = true;
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
@@ -146,6 +147,7 @@ class ClientPrefs {
 		FlxG.save.data.msTiming = msTiming;
 		FlxG.save.data.sizeofFPSDisplayArea = sizeofFPSDisplayArea;
 		FlxG.save.data.judgementCounter = judgementCounter;
+		FlxG.save.data.richPresence = richPresence;
 	
 		FlxG.save.flush();
 
@@ -322,6 +324,10 @@ class ClientPrefs {
 		if (FlxG.save.data.judgementCounter != null)
 		{
 			judgementCounter = FlxG.save.data.judgementCounter;
+		}
+		if (FlxG.save.data.richPresence != null)
+		{
+			richPresence = FlxG.save.data.richPresence;
 		}
 	}
 

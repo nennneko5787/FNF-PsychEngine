@@ -15,38 +15,47 @@ class DiscordClient
 	public static var isInitialized:Bool = false;
 	public function new()
 	{
-		trace("Discord Client starting...");
-		DiscordRpc.start({
-			clientID: "863222024192262205",
-			onReady: onReady,
-			onError: onError,
-			onDisconnected: onDisconnected
-		});
-		trace("Discord Client started.");
-
-		while (true)
+		if (ClientPrefs.richPresence == true)
 		{
-			DiscordRpc.process();
-			sleep(2);
-			//trace("Discord Client Update");
-		}
+			trace("Discord Client starting...");
+			DiscordRpc.start({
+				clientID: "1037867144324591626",
+				onReady: onReady,
+				onError: onError,
+				onDisconnected: onDisconnected
+			});
+			trace("Discord Client started.");
 
-		DiscordRpc.shutdown();
+			while (true)
+			{
+				DiscordRpc.process();
+				sleep(2);
+				//trace("Discord Client Update");
+			}
+
+			DiscordRpc.shutdown();
+		}
 	}
 	
 	public static function shutdown()
 	{
-		DiscordRpc.shutdown();
+		if (ClientPrefs.richPresence == true)
+		{
+			DiscordRpc.shutdown();
+		}
 	}
 	
 	static function onReady()
 	{
-		DiscordRpc.presence({
-			details: "In the Menus",
-			state: null,
-			largeImageKey: 'icon',
-			largeImageText: "Psych Engine"
-		});
+		if (ClientPrefs.richPresence == true)
+		{
+			DiscordRpc.presence({
+				details: "In the Menus",
+				state: null,
+				largeImageKey: 'nekoenginediscordicon',
+				largeImageText: "nekoEngine"
+			});
+		}
 	}
 
 	static function onError(_code:Int, _message:String)
@@ -61,12 +70,15 @@ class DiscordClient
 
 	public static function initialize()
 	{
-		var DiscordDaemon = sys.thread.Thread.create(() ->
+		if (ClientPrefs.richPresence == true)
 		{
-			new DiscordClient();
-		});
-		trace("Discord Client initialized");
-		isInitialized = true;
+			var DiscordDaemon = sys.thread.Thread.create(() ->
+			{
+				new DiscordClient();
+			});
+			trace("Discord Client initialized");
+			isInitialized = true;
+		}
 	}
 
 	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
@@ -78,15 +90,41 @@ class DiscordClient
 			endTimestamp = startTimestamp + endTimestamp;
 		}
 
+		if (ClientPrefs.richPresence == true)
+		{
+			DiscordRpc.presence({
+				details: details,
+				state: state,
+				largeImageKey: 'nekoenginediscordicon',
+				largeImageText: "Engine Version: " + MainMenuState.psychEngineVersion,
+				smallImageKey : smallImageKey,
+				// Obtained times are in milliseconds so they are divided so Discord can use it
+				startTimestamp : Std.int(startTimestamp / 1000),
+				endTimestamp : Std.int(endTimestamp / 1000)
+			});
+		}
+
+		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
+	}
+
+	public static function changePresenceTwo(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
+	{
+		var startTimestamp:Float = if(hasStartTimestamp) Date.now().getTime() else 0;
+
+		if (endTimestamp > 0)
+		{
+			endTimestamp = startTimestamp + endTimestamp;
+		}
+
 		DiscordRpc.presence({
 			details: details,
 			state: state,
-			largeImageKey: 'icon',
+			largeImageKey: 'nekoenginediscordicon',
 			largeImageText: "Engine Version: " + MainMenuState.psychEngineVersion,
 			smallImageKey : smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),
-            endTimestamp : Std.int(endTimestamp / 1000)
+			endTimestamp : Std.int(endTimestamp / 1000)
 		});
 
 		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');

@@ -99,17 +99,17 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.decimals = 1;
 			addOption(option);
 			
-			#if (!mobile && !html5)
+			#if desktop
 			var option:Option = new Option('Size of FPS display area',
-				'What size should the FPS display area be?' ,
+				'What size should the FPS display area be?\nIt will be applied after the reboot.' ,
 				'sizeofFPSDisplayArea',
 				'int',
 				14);
 			option.minValue = 1;
+			option.maxValue = 240;
 			option.changeValue = 1;
 			option.displayFormat = '%v px';
 			addOption(option);
-			option.onChange = onChangesizeofFPSDisplayArea;
 			#end
 			#if !mobile
 			var option:Option = new Option('Show FPS',
@@ -119,7 +119,7 @@ class VisualsUISubState extends BaseOptionsMenu
 				true);
 			addOption(option);
 			#end
-			#if (!mobile && !html5)
+			#if desktop
 			var option:Option = new Option('Show Memory Usage',
 				'If unchecked, hide memory usage.' ,
 				'showMemory',
@@ -241,25 +241,27 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.decimals = 1;
 			addOption(option);
 			
-			#if !mobile
+			#if desktop
 			var option:Option = new Option('Size of FPS display area',
-				'FPS表示部分のサイズはどのくらいがいいでしょうか？',
+				'FPS表示部分のサイズはどのくらいがいいでしょうか？\n再起動後に適用されます。',
 				'sizeofFPSDisplayArea',
 				'int',
 				14);
 			option.minValue = 1;
+			option.maxValue = 240;
 			option.changeValue = 1;
 			option.displayFormat = '%v px';
 			addOption(option);
-			option.onChange = onChangesizeofFPSDisplayArea;
-
+			#end
+			#if !mobile
 			var option:Option = new Option('Show FPS',
 				'チェックを外すと、FPSカウンターを非表示にします。',
 				'showFPS',
 				'bool',
 				true);
 			addOption(option);
-
+			#end
+			#if desktop
 			var option:Option = new Option('Show Memory Usage',
 				'チェックを外すと、メモリ使用量を非表示にします。',
 				'showMemory',
@@ -273,7 +275,8 @@ class VisualsUISubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
-
+			#end
+			#if !mobile
 			var option:Option = new Option('Show Version',
 				'チェックを外すと、バージョンを非表示にします。',
 				'showVersion',
@@ -344,10 +347,6 @@ class VisualsUISubState extends BaseOptionsMenu
 	}
 
 	#if !mobile
-	function onChangesizeofFPSDisplayArea()
-	{
-		reboot = true;
-	}
 	/*
 	function onChangeFPSCounter()
 	{
