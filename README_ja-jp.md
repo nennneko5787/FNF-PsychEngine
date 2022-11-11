@@ -56,7 +56,7 @@ lime build windows -release
 </pre>
 ### Mac
 <pre>
-ライムビルドマック
+lime build mac
 </pre>
 リリース版をビルドする場合は、以下のコマンドを使用します。
 <pre>
