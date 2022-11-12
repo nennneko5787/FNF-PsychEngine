@@ -26,7 +26,7 @@ using StringTools;
 class MainMenuState extends MusicBeatState
 {
 	#if !debug
-	public static var nekoEngineVersion:String = '0.0.2'; //This is also used for Discord RPC
+	public static var nekoEngineVersion:String = '0.0.3'; //This is also used for Discord RPC
 	#else
 	public static var nekoEngineVersion:String = 'Debug'; //This is also used for Discord RPC
 	#end

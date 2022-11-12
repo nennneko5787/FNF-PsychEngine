@@ -2333,7 +2333,7 @@ class PlayState extends MusicBeatState
 
 		judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}';
 
-		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
+		if(ClientPrefs.scoreZoom && !miss)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
@@ -4165,14 +4165,12 @@ class PlayState extends MusicBeatState
 			spawnNoteSplashOnNote(note);
 		}
 
-		if(!practiceMode && !cpuControlled) {
-			songScore += score;
-			if(!note.ratingDisabled)
-			{
-				songHits++;
-				totalPlayed++;
-				RecalculateRating(false);
-			}
+		songScore += score;
+		if(!note.ratingDisabled)
+		{
+			songHits++;
+			totalPlayed++;
+			RecalculateRating(false);
 		}
 
 		var pixelShitPart1:String = "";
