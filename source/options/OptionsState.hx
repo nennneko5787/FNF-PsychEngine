@@ -64,7 +64,9 @@ class OptionsState extends MusicBeatState
 		titleText.alpha = 0.4;
 		add(titleText);
 
+		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
+		#end
 
 		for (i in 0...options.length)
 		{

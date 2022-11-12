@@ -50,7 +50,9 @@ class DiscordSettingsSubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
+			#if desktop
             option.onChange = onChangeRP;
+			#end
 		}
 
 		if (ClientPrefs.language == "Japanese")
@@ -61,12 +63,15 @@ class DiscordSettingsSubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
+			#if desktop
             option.onChange = onChangeRP;
+			#end
 		}
 
 		super();
 	}
 
+	#if desktop
 	function onChangeRP()
     {
         if (ClientPrefs.richPresence == true)
@@ -78,4 +83,5 @@ class DiscordSettingsSubState extends BaseOptionsMenu
             DiscordClient.shutdown();
         }
     }
+	#end
 }
