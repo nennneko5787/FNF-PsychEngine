@@ -30,6 +30,7 @@ haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
 haxelib install hxCodec
 haxelib install hxcpp
+haxelib install hxcpp-debug-server
 </pre>
 現時点では、カメラをズームアウトした曲のトランジションバグは、オプションで修正できます。
 <pre>

@@ -17,4 +17,5 @@ haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit
 haxelib install hxCodec
 haxelib install hxcpp
 haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons
+haxelib install hxcpp-debug-server
 pause
