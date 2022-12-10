@@ -98,10 +98,10 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.changeValue = 0.1;
 			option.decimals = 1;
 			addOption(option);
-			
-			#if desktop
+		
+			#if !mobile
 			var option:Option = new Option('Size of FPS display area',
-				'What size should the FPS display area be?\nIt will be applied after the reboot.' ,
+				'What size should the FPS display area be?' ,
 				'sizeofFPSDisplayArea',
 				'int',
 				14);
@@ -110,8 +110,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.changeValue = 1;
 			option.displayFormat = '%v px';
 			addOption(option);
-			#end
-			#if !mobile
+
 			var option:Option = new Option('Show FPS',
 				'If unchecked, hide the FPS counter.' ,
 				'showFPS',
@@ -241,9 +240,9 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.decimals = 1;
 			addOption(option);
 			
-			#if desktop
+			#if !mobile
 			var option:Option = new Option('Size of FPS display area',
-				'FPS表示部分のサイズはどのくらいがいいでしょうか？\n再起動後に適用されます。',
+				'FPS表示部分のサイズはどのくらいがいいでしょうか？',
 				'sizeofFPSDisplayArea',
 				'int',
 				14);
@@ -252,8 +251,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.changeValue = 1;
 			option.displayFormat = '%v px';
 			addOption(option);
-			#end
-			#if !mobile
+
 			var option:Option = new Option('Show FPS',
 				'チェックを外すと、FPSカウンターを非表示にします。',
 				'showFPS',

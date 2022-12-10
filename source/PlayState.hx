@@ -208,6 +208,8 @@ class PlayState extends MusicBeatState
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var practiceMode:Bool = false;
+	public var randomcharts:Bool = false;
+	public var vsmode:Bool = false;
 
 	public var botplaySine:Float = 0;
 	public static var botplayTxt:FlxText;
@@ -272,6 +274,7 @@ class PlayState extends MusicBeatState
 	public var judgementCounter:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
+	var judgementCounterTween:FlxTween;
 
 	var msTimeTxt:FlxText = null;
 	var timeShown:Int = 0;
@@ -396,9 +399,15 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		randomcharts = ClientPrefs.getGameplaySetting('randomcharts', false);
+		vsmode = ClientPrefs.getGameplaySetting('vsmode',false);
 
-		if (cpuControlled || practiceMode) doNotSaveScores = true;
-
+		if (cpuControlled || practiceMode || randomcharts){
+			doNotSaveScores = true;
+		}else{
+			doNotSaveScores = false;
+		}
+		
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -1181,7 +1190,7 @@ class PlayState extends MusicBeatState
 			judgementCounter.borderQuality = 2;
 			judgementCounter.scrollFactor.set();
 			judgementCounter.screenCenter(Y);
-			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}';
+			judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nCombo: ${combo} / ${maxcombo}';
 			judgementCounter.visible = !ClientPrefs.hideHud;
 			add(judgementCounter);
 		}
@@ -2326,12 +2335,11 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{
 		scoreTxt.text = 'Score: ' + songScore
-		+ ' | Combo: ' + combo + " / "+ maxcombo
 		+ ' | Misses: ' + songMisses
 		+ ' | Rating: ' + ratingName
 		+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 
-		judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}';
+		judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\nCombo: ${combo} / ${maxcombo}';
 
 		if(ClientPrefs.scoreZoom && !miss)
 		{
@@ -2343,6 +2351,17 @@ class PlayState extends MusicBeatState
 			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
 				onComplete: function(twn:FlxTween) {
 					scoreTxtTween = null;
+				}
+			});
+
+			if(judgementCounterTween != null) {
+				judgementCounterTween.cancel();
+			}
+			judgementCounter.scale.x = 1.075;
+			judgementCounter.scale.y = 1.075;
+			judgementCounterTween = FlxTween.tween(judgementCounter.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					judgementCounterTween = null;
 				}
 			});
 		}
@@ -3971,7 +3990,7 @@ class PlayState extends MusicBeatState
 
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
 		if(ret != FunkinLua.Function_Stop && !transitioning) {
-			if (SONG.validScore)
+			if (SONG.validScore && !ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false) && !doNotSaveScores)
 			{
 				#if !switch
 				var percent:Float = ratingPercent;
@@ -4183,7 +4202,9 @@ class PlayState extends MusicBeatState
 		}
 
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
-		rating.cameras = [camHUD];
+		if (ClientPrefs.comboSprCamera == 'HUD'){
+			rating.cameras = [camHUD];
+		}
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -4195,7 +4216,9 @@ class PlayState extends MusicBeatState
 		rating.y -= ClientPrefs.comboOffset[1];
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
-		comboSpr.cameras = [camHUD];
+		if (ClientPrefs.comboSprCamera == 'HUD'){
+			comboSpr.cameras = [camHUD];
+		}
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
@@ -4261,7 +4284,9 @@ class PlayState extends MusicBeatState
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
-			numScore.cameras = [camHUD];
+			if (ClientPrefs.comboSprCamera == 'HUD'){
+				numScore.cameras = [camHUD];
+			}
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
@@ -4315,6 +4340,7 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.msTiming != "I don\'t want it")
 		{
 			remove(msTimeTxt);
+			msTimeTxt = null;
 			msTimeTxt = new FlxText(0, 0, 0, "0ms");
 			timeShown = 0;
 			switch (daRating.name)
@@ -4331,10 +4357,9 @@ class PlayState extends MusicBeatState
 			msTimeTxt.borderStyle = OUTLINE;
 			msTimeTxt.borderSize = 1;
 			msTimeTxt.borderColor = FlxColor.BLACK;
-			if (ClientPrefs.msTiming == "detailed display")
+			msTimeTxt.text = Std.string(Math.round(Conductor.songPosition + ClientPrefs.ratingOffset - note.strumTime)) + "ms";
+			if (ClientPrefs.msTiming != "detailed display")
 			{
-				msTimeTxt.text = Std.string(Math.round(Conductor.songPosition + ClientPrefs.ratingOffset - note.strumTime)) + "ms";
-			}else{
 				if (Math.round(Conductor.songPosition + ClientPrefs.ratingOffset - note.strumTime) <= -0)
 				{
 					msTimeTxt.text = "FAST";
@@ -4366,7 +4391,7 @@ class PlayState extends MusicBeatState
 			startDelay: Conductor.crochet * 0.001,
 				onUpdate: function(tween:FlxTween)
 				{
-					if (msTimeTxt != null && ClientPrefs.msTiming != "I don\'t want it")
+					if (timeShown <= 20 && ClientPrefs.msTiming != "I don\'t want it")
 					{
 						msTimeTxt.alpha -= 0.02;
 						timeShown++;
@@ -4379,11 +4404,13 @@ class PlayState extends MusicBeatState
 			{
 				coolText.destroy();
 				comboSpr.destroy();
+				/*
 				if (msTimeTxt != null && timeShown >= 20 && ClientPrefs.msTiming != "I don\'t want it")
 				{
 					remove(msTimeTxt);
 					msTimeTxt = null;
 				}
+				*/
 				rating.destroy();
 			},
 			startDelay: Conductor.crochet * 0.002 / playbackRate
@@ -4715,6 +4742,9 @@ class PlayState extends MusicBeatState
 
 		if (SONG.needsVoices)
 			vocals.volume = 1;
+
+		if (vsmode && health > 0.1)
+			health -= note.hitHealth * healthGain;
 
 		var time:Float = 0.15;
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
@@ -5123,6 +5153,8 @@ class PlayState extends MusicBeatState
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
+
+		if (ClientPrefs.metronomeVolume > 0) FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.metronomeVolume);
 
 		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
 		{

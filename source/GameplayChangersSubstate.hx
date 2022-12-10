@@ -94,6 +94,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('Randomly Generated Charts', 'randomcharts', 'bool', false);
+		optionsArray.push(option);
+
+		var option:GameplayOption = new GameplayOption('vs Mode', 'vsmode', 'bool', false);
+		optionsArray.push(option);
 	}
 
 	public function getOptionByName(name:String)
@@ -179,6 +185,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (controls.BACK) {
 			close();
 			ClientPrefs.saveSettings();
+			FreeplayState.freePlayPitch = ClientPrefs.getGameplaySetting('songspeed', 1);
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 

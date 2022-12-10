@@ -1,5 +1,6 @@
 @echo off
 color 0a
+echo START INSTALL
 haxelib install lime
 haxelib install openfl
 haxelib install flixel

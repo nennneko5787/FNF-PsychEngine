@@ -53,7 +53,8 @@ class ClientPrefs {
 		'healthloss' => 1.0,
 		'instakill' => false,
 		'practice' => false,
-		'botplay' => false
+		'botplay' => false,
+		'randomcharts' => false
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
@@ -96,6 +97,8 @@ class ClientPrefs {
 	public static var sizeofFPSDisplayArea:Int = 14;
 	public static var judgementCounter:Bool = true;
 	public static var richPresence:Bool = true;
+	public static var comboSprCamera:String = "HUD";
+	public static var metronomeVolume:Float = 0;
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
@@ -148,11 +151,13 @@ class ClientPrefs {
 		FlxG.save.data.sizeofFPSDisplayArea = sizeofFPSDisplayArea;
 		FlxG.save.data.judgementCounter = judgementCounter;
 		FlxG.save.data.richPresence = richPresence;
+		FlxG.save.data.comboSprCamera = comboSprCamera;
+		FlxG.save.data.metronomeVolume = metronomeVolume;
 	
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2', 'ninjamuffin99'); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		save.bind('controls_v2' #if (flixel < "5.0.0"), 'ninjamuffin99' #end); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = keyBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
@@ -297,7 +302,7 @@ class ClientPrefs {
 			comboStacking = FlxG.save.data.comboStacking;
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2', 'ninjamuffin99');
+		save.bind('controls_v2' #if (flixel < "5.0.0"), 'ninjamuffin99' #end);
 		if(save != null && save.data.customControls != null) {
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.customControls;
 			for (control => keys in loadedControls) {
@@ -328,6 +333,14 @@ class ClientPrefs {
 		if (FlxG.save.data.richPresence != null)
 		{
 			richPresence = FlxG.save.data.richPresence;
+		}
+		if (FlxG.save.data.comboSprCamera != null)
+		{
+			comboSprCamera = FlxG.save.data.comboSprCamera;
+		}
+		if (FlxG.save.data.metronomeVolume != null)
+		{
+			metronomeVolume = FlxG.save.data.metronomeVolume;
 		}
 	}
 

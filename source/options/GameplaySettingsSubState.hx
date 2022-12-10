@@ -161,6 +161,27 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
+
+			var option:Option = new Option('ComboSprite:',
+				"Whether to display on the game screen or on the HUD." ,
+				'comboSprCamera',
+				'string',
+				'detailed display',
+				['HUD','Game']);
+			addOption(option);
+
+			var option:Option = new Option('Metronome Volume',
+				'The metronome volume can be changed.',
+				'metronomeVolume',
+				'percent',
+				0);
+			addOption(option);
+			option.scrollSpeed = 1.6;
+			option.minValue = 0.0;
+			option.maxValue = 1;
+			option.changeValue = 0.1;
+			option.decimals = 1;
+			option.onChange = onChangeHitsoundVolume;
 		}
 
 		if (ClientPrefs.language == "Japanese")
@@ -290,6 +311,27 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 				'bool',
 				true);
 			addOption(option);
+
+			var option:Option = new Option('ComboSprite:',
+				"ゲーム画面に表示するか、HUDに表示するか。" ,
+				'comboSprCamera',
+				'string',
+				'detailed display',
+				['HUD','Game']);
+			addOption(option);
+
+			var option:Option = new Option('Metronome Volume',
+				'メトロノームの音量を変更できます。',
+				'metronomeVolume',
+				'percent',
+				0);
+			addOption(option);
+			option.scrollSpeed = 1.6;
+			option.minValue = 0.0;
+			option.maxValue = 1;
+			option.changeValue = 0.1;
+			option.decimals = 1;
+			option.onChange = onChangeHitsoundVolume;
 		}
 
 		super();

@@ -50,10 +50,13 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	public static var freePlayPitch:Float = 1;
+
 	override function create()
 	{
 		//Paths.clearStoredMemory();
 		//Paths.clearUnusedMemory();
+		trace(freePlayPitch);
 		
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
@@ -242,6 +245,8 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
+		FlxG.sound.music.pitch = freePlayPitch;
+
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, CoolUtil.boundTo(elapsed * 24, 0, 1)));
 		lerpRating = FlxMath.lerp(lerpRating, intendedRating, CoolUtil.boundTo(elapsed * 12, 0, 1));
 
@@ -347,6 +352,7 @@ class FreeplayState extends MusicBeatState
 				vocals.persist = true;
 				vocals.looped = true;
 				vocals.volume = 0.7;
+				vocals.pitch = freePlayPitch;
 				instPlaying = curSelected;
 				#end
 			}
@@ -542,6 +548,7 @@ class FreeplayState extends MusicBeatState
 			vocals.persist = true;
 			vocals.looped = true;
 			vocals.volume = 0.7;
+			vocals.pitch = freePlayPitch;
 			instPlaying = curSelected;
 			#end
 		}

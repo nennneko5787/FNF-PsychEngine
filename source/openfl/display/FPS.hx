@@ -147,6 +147,7 @@ class FPS extends TextField
 
 			text += "\n";
 			count = 0;
+			defaultTextFormat = new TextFormat("_sans", ClientPrefs.sizeofFPSDisplayArea, 0xFFFFFF);
 		}
 
 		cacheCount = currentCount;
