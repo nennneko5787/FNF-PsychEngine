@@ -54,7 +54,9 @@ class ClientPrefs {
 		'instakill' => false,
 		'practice' => false,
 		'botplay' => false,
-		'randomcharts' => false
+		'randomcharts' => false,
+		'vsmode' => false,
+		'opponentplay' => false,
 	];
 
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];

@@ -23,7 +23,7 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItems:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'GamePlay Options', 'Exit to menu'];
 	var difficultyChoices = [];
-	var gameplayOptions:Array<String> = ['Instakill on Miss', 'Practice Mode', 'Botplay'];
+	var gameplayOptions:Array<String> = ['Practice Mode', 'Botplay'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -103,12 +103,16 @@ class PauseSubState extends MusicBeatSubstate
 		blueballedTxt.updateHitbox();
 		add(blueballedTxt);
 
-		instakillText = new FlxText(20, 15 + 101, 0, "INSTANT ON KILL", 32);
+		instakillText = new FlxText(20, 15 + 101, 0, 'INSTANT ON KILL(${PlayState.instance.instakillOnMiss})', 32);
 		instakillText.scrollFactor.set();
 		instakillText.setFormat(Paths.font('vcr.ttf'), 32);
 		instakillText.x = FlxG.width - (instakillText.width + 20);
 		instakillText.updateHitbox();
-		instakillText.visible = PlayState.instance.instakillOnMiss;
+		if (PlayState.instance.instakillOnMiss == 0){
+			instakillText.visible = false;
+		}else{
+			instakillText.visible = true;
+		}
 		add(instakillText);
 
 		practiceText = new FlxText(20, 15 + 133, 0, "PRACTICE MODE", 32);
@@ -235,10 +239,6 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				switch (daSelected)
 				{
-					case 'Instakill on Miss':
-						PlayState.instance.instakillOnMiss = !PlayState.instance.instakillOnMiss;
-						PlayState.changedDifficulty = true;
-						instakillText.visible = PlayState.instance.instakillOnMiss;
 					case 'Practice Mode':
 						PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 						PlayState.changedDifficulty = true;
