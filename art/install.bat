@@ -18,4 +18,5 @@ haxelib install hxCodec
 haxelib install hxcpp
 haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons
 haxelib install hxcpp-debug-server
+haxelib git faxe https://github.com/ashea-code/faxe
 pause
