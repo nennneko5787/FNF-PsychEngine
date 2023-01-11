@@ -35,7 +35,7 @@ using StringTools;
 
 class ModsMenuState extends MusicBeatState
 {
-	public static var mods:Array<ModMetadata> = [];
+	var mods:Array<ModMetadata> = [];
 	static var changedAThing = false;
 	var bg:FlxSprite;
 	var intendedColor:Int;
@@ -48,9 +48,6 @@ class ModsMenuState extends MusicBeatState
 	private static var curSelected:Int = 0;
 	public static var defaultColor:FlxColor = 0xFF665AFF;
 
-	//public static var modOptionCur:String = null;
-
-	var buttonOptions:FlxButton;
 	var buttonDown:FlxButton;
 	var buttonTop:FlxButton;
 	var buttonDisableAll:FlxButton;
@@ -152,7 +149,7 @@ class ModsMenuState extends MusicBeatState
 		buttonToggle.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, CENTER);
 		setAllLabelsOffset(buttonToggle, -15, 10);
 		startX -= 70;
-		
+
 		buttonUp = new FlxButton(startX, 0, "/\\", function()
 		{
 			moveMod(-1);
@@ -254,23 +251,6 @@ class ModsMenuState extends MusicBeatState
 		buttonsArray.push(buttonEnableAll);
 		visibleWhenHasMods.push(buttonEnableAll);
 
-		/*
-		buttonOptions = new FlxButton(startX, 0, "Options", function()
-		{
-			modOptionCur = modsList[curSelected][0];
-			FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
-			openSubState(new options.ModsOptionsState());
-		});
-		buttonOptions.setGraphicSize(170, 50);
-		buttonOptions.updateHitbox();
-		buttonOptions.label.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.BLACK, CENTER);
-		buttonOptions.label.fieldWidth = 170;
-		setAllLabelsOffset(buttonOptions, 0, 10);
-		add(buttonOptions);
-		buttonsArray.push(buttonOptions);
-		visibleWhenHasMods.push(buttonOptions);
-		*/
-		
 		// more buttons
 		var startX:Int = 1100;
 
@@ -529,6 +509,14 @@ class ModsMenuState extends MusicBeatState
 			changeSelection(1);
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
+
+
+		if(FlxG.mouse.wheel != 0)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+			changeSelection(-FlxG.mouse.wheel);
+		}
+
 		updatePosition(elapsed);
 		super.update(elapsed);
 	}

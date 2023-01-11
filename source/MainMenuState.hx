@@ -26,7 +26,7 @@ using StringTools;
 class MainMenuState extends MusicBeatState
 {
 	#if !debug
-	public static var nekoEngineVersion:String = '0.0.3'; //This is also used for Discord RPC
+	public static var nekoEngineVersion:String = '0.0.4'; //This is also used for Discord RPC
 	#else
 	public static var nekoEngineVersion:String = 'Debug'; //This is also used for Discord RPC
 	#end
@@ -206,6 +206,12 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
+			}
+
+			if(FlxG.mouse.wheel != 0)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+				changeItem(-FlxG.mouse.wheel);
 			}
 
 			if (controls.BACK)

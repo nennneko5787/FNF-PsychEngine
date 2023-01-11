@@ -145,6 +145,12 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			changeSelection(1);
 		}
 
+		if(FlxG.mouse.wheel != 0)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+			changeSelection(-FlxG.mouse.wheel);
+		}
+
 		if (controls.BACK) {
 			ClientPrefs.saveSettings();
 			close();
@@ -167,6 +173,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					curOption.setValue((curOption.getValue() == true) ? false : true);
 					curOption.change();
 					reloadCheckboxes();
+					ClientPrefs.saveSettings();
 				}
 			} else {
 				if(controls.UI_LEFT || controls.UI_RIGHT) {
@@ -214,6 +221,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 							updateTextFrom(curOption);
 							curOption.change();
 							FlxG.sound.play(Paths.sound('scrollMenu'));
+							ClientPrefs.saveSettings();
 						} else if(curOption.type != 'string') {
 							holdValue += curOption.scrollSpeed * elapsed * (controls.UI_LEFT ? -1 : 1);
 							if(holdValue < curOption.minValue) holdValue = curOption.minValue;
@@ -229,6 +237,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 							}
 							updateTextFrom(curOption);
 							curOption.change();
+							ClientPrefs.saveSettings();
 						}
 					}
 
@@ -237,6 +246,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					}
 				} else if(controls.UI_LEFT_R || controls.UI_RIGHT_R) {
 					clearHold();
+					ClientPrefs.saveSettings();
 				}
 			}
 
@@ -258,6 +268,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				reloadCheckboxes();
+				ClientPrefs.saveSettings();
 			}
 		}
 

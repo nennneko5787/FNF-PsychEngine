@@ -5,6 +5,7 @@ import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
 import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
 import openfl.display._internal.stats.DrawCallContext;
@@ -34,6 +35,17 @@ class FPS extends TextField
 	public var count(default, null):Int;
 	public var memoryMegas(default, null):Float;
 	public var maxmemory(default, null):Float;
+	public var fpscolor:Array<FlxColor> = [
+		FlxColor.fromRGB(148, 0, 211),
+		FlxColor.fromRGB(75, 0, 130),
+		FlxColor.fromRGB(0, 0, 255),
+		FlxColor.fromRGB(0, 255, 0),
+		FlxColor.fromRGB(255, 255, 0),
+		FlxColor.fromRGB(255, 127, 0),
+		FlxColor.fromRGB(255, 0, 0)
+	];
+	public static var currentColor = 0;
+	public static var skippedFrames = 0;
 
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
@@ -88,21 +100,15 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount)
 		{
+			text = "";
 			if (ClientPrefs.showFPS){
-				text = "FPS: " + currentFPS;
-				count++;
+				text += "FPS: " + currentFPS + "\n";
 			}
 			
 			#if (openfl && !html5)
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-
-			if (count != 0){
-				text += "\n";
-			}
-
 			if (ClientPrefs.showMemory){
-				text += "Memory: " + memoryMegas + " MB";
-				count++;
+				text += "Memory: " + memoryMegas + " MB" + "\n";
 			}
 			
 			if (memoryMegas > maxmemory)
@@ -110,33 +116,34 @@ class FPS extends TextField
 				maxmemory = memoryMegas;
 			}
 
-			if (count != 0){
-				text += "\n";
-			}
-
 			if (ClientPrefs.showMemoryHeap){
-				text += "MemoryPeak: "+ maxmemory + " MB";
-				count++; 
+				text += "MemoryPeak: "+ maxmemory + " MB" + "\n";
 			}
 			#end
-
-			if (count != 0){
-				text += "\n";
-			}
 			
 			if (ClientPrefs.showVersion){
 				#if !debug
-				text += "nekoEngine v"+ MainMenuState.nekoEngineVersion;
+				text += "nekoEngine v"+ MainMenuState.nekoEngineVersion + "\n";
 				#else
-				text += "nekoEngine "+ MainMenuState.nekoEngineVersion;
+				text += "nekoEngine "+ MainMenuState.nekoEngineVersion + "\n";
 				#end
-				count++;
 			}
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
+			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2 && !ClientPrefs.fpsRainBow)
 			{
 				textColor = 0xFFFF0000;
+			}
+
+			if (ClientPrefs.fpsRainBow)
+			{
+				if (currentColor >= fpscolor.length)
+					currentColor = 0;
+				currentColor = Math.round(FlxMath.lerp(0, fpscolor.length, skippedFrames / (ClientPrefs.framerate / 4)));
+				currentColor++;
+				skippedFrames++;
+				if (skippedFrames > (ClientPrefs.framerate / 4))
+					skippedFrames = 0;
 			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
@@ -145,9 +152,11 @@ class FPS extends TextField
 			text += "\nstage3DDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE3D);
 			#end
 
-			text += "\n";
-			count = 0;
-			defaultTextFormat = new TextFormat("_sans", ClientPrefs.sizeofFPSDisplayArea, 0xFFFFFF);
+			if (!ClientPrefs.fpsRainBow){
+				defaultTextFormat = new TextFormat("_sans", ClientPrefs.sizeofFPSDisplayArea, 0xFFFFFF);
+			}else{
+				defaultTextFormat = new TextFormat("_sans", ClientPrefs.sizeofFPSDisplayArea, fpscolor[currentColor]);
+			}
 		}
 
 		cacheCount = currentCount;

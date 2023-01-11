@@ -30,9 +30,11 @@ using StringTools;
 class OptionsState extends MusicBeatState
 {
 	#if desktop
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Discord'];
+		//var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Discord', 'Replays'];
+		var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Ridiculous', 'Discord'];
 	#else
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+		//var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Replays'];
+		var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Ridiculous'];
 	#end
 
 	private var grpTexts:FlxTypedGroup<Alphabet>;
@@ -47,7 +49,7 @@ class OptionsState extends MusicBeatState
 		FlxG.camera.bgColor = FlxColor.BLACK;
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Editors Main Menu", null);
+		DiscordClient.changePresence("Options Menu", null);
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -64,9 +66,6 @@ class OptionsState extends MusicBeatState
 		titleText.alpha = 0.4;
 		add(titleText);
 
-		#if desktop
-		DiscordClient.changePresence("Options Menu", null);
-		#end
 
 		for (i in 0...options.length)
 		{
@@ -81,7 +80,6 @@ class OptionsState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 		super.create();
-		ClientPrefs.saveSettings();
 	}
 
 	override function update(elapsed:Float)
@@ -93,6 +91,12 @@ class OptionsState extends MusicBeatState
 		if (controls.UI_DOWN_P)
 		{
 			changeSelection(1);
+		}
+
+		if(FlxG.mouse.wheel != 0)
+		{
+			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+			changeSelection(-FlxG.mouse.wheel);
 		}
 
 		if (controls.BACK)
@@ -117,6 +121,12 @@ class OptionsState extends MusicBeatState
 					LoadingState.loadAndSwitchState(new options.NoteOffsetState());
 				case 'Discord':
 					openSubState(new options.DiscordSettingsSubState());
+				case 'Ridiculous':
+					openSubState(new options.RidiculousOptionsSubState());
+/*
+				case 'Replays':
+					openSubState(new options.ReplaysMenuSubState());
+*/
 			}
 		}
 		

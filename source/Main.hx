@@ -4,6 +4,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.util.FlxColor;
 import openfl.Assets;
 import openfl.Lib;
 import openfl.display.FPS;
@@ -11,6 +12,20 @@ import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
+
+/*Screen Shot
+import flixel.addons.plugin.screengrab.FlxScreenGrab;
+import flash.display.BitmapData;
+import flash.utils.ByteArray;
+import flixel.addons.util.PNGEncoder;
+#if sys
+#if (!lime_legacy || lime < "2.9.0")
+import openfl.display.PNGEncoderOptions;
+#end
+#else
+import flash.net.FileReference;
+#end
+*/
 
 #if desktop
 import Discord.DiscordClient;
@@ -52,6 +67,21 @@ class Main extends Sprite
 	{
 		super();
 
+		/*Screen Shot
+		flixel.addons.plugin.screengrab.FlxScreenGrab.clearCaptureRegion();
+		flixel.addons.plugin.screengrab.FlxScreenGrab.clearHotKeys();
+		flixel.addons.plugin.screengrab.FlxScreenGrab.defineCaptureRegion(0, 0, game.width, game.height);
+		flixel.addons.plugin.screengrab.FlxScreenGrab.defineHotKeys([F1], false, false);
+		if (FlxG.keys.checkStatus(F1, JUST_PRESSED))
+		{
+			if (!sys.FileSystem.exists("assets/screenshots/") && !sys.FileSystem.isDirectory("assets/screenshots/"))
+			{
+				// path exists and is a directory
+				sys.FileSystem.createDirectory("assets/screenshots/");
+			}
+			screenshot_save("assets/screenshots/"+Date.now().getTime()+".png");
+		}
+		*/
 		if (stage != null)
 		{
 			init();
@@ -95,7 +125,7 @@ class Main extends Sprite
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
-			fpsVar.visible = ClientPrefs.showFPS;
+			fpsVar.visible = true;
 		}
 		#end
 
@@ -118,6 +148,45 @@ class Main extends Sprite
 		#end
 	}
 
+	/*
+	static function screenshot_save(Filename:String = ""):Void
+	{
+		if (FlxScreenGrab.screenshot.bitmapData == null)
+		{
+			return;
+		}
+
+		var png:ByteArray;
+		#if flash
+		png = PNGEncoder.encode(FlxScreenGrab.screenshot.bitmapData);
+		#elseif openfl_legacy
+		png = FlxScreenGrab.screenshot.bitmapData.encode(FlxScreenGrab.screenshot.bitmapData.rect, "png");
+		#else
+		png = FlxScreenGrab.screenshot.bitmapData.encode(FlxScreenGrab.screenshot.bitmapData.rect, new PNGEncoderOptions());
+		#end
+
+		#if !sys
+		var file:FileReference = new FileReference();
+		file.save(png, Filename);
+		#elseif (!lime_legacy || lime < "2.9.0")
+		var documentsDirectory = "";
+		#if lime_legacy
+		documentsDirectory = flash.filesystem.File.documentsDirectory.nativePath;
+		#else
+		documentsDirectory = lime.system.System.documentsDirectory;
+		#end
+
+		var path = "assets/screenshots/" + Filename;
+
+		if (path != "" && path != null) // if path is empty, the user cancelled the save operation and we can safely do nothing
+		{
+			var f = sys.io.File.write(path, true);
+			f.writeString(png.readUTFBytes(png.length));
+			f.close();
+		}
+		#end
+	}
+*/
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
 	#if CRASH_HANDLER

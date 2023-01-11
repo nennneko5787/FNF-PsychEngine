@@ -96,6 +96,16 @@ class MusicBeatSubstate extends FlxSubState
 		updateCurStep();
 		updateBeat();
 
+		if (ClientPrefs.mousecursor == "System"){
+			//FlxG.mouse.visible = true;
+			FlxG.mouse.useSystemCursor = true;
+		}
+		
+		if (ClientPrefs.mousecursor == "Flixel"){
+			//FlxG.mouse.visible = true;
+			FlxG.mouse.useSystemCursor = false;
+		}
+
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
 
