@@ -180,6 +180,16 @@ class MusicBeatState extends FlxUIState
 
 		if(FlxG.save.data != null) FlxG.save.data.fullscreen = FlxG.fullscreen;
 
+		if (ClientPrefs.mousecursor == "System"){
+			//FlxG.mouse.visible = true;
+			FlxG.mouse.useSystemCursor = true;
+		}
+		
+		if (ClientPrefs.mousecursor == "Flixel"){
+			//FlxG.mouse.visible = true;
+			FlxG.mouse.useSystemCursor = false;
+		}
+
 		super.update(elapsed);
 	}
 

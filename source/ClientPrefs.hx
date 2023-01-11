@@ -101,6 +101,13 @@ class ClientPrefs {
 	public static var richPresence:Bool = true;
 	public static var comboSprCamera:String = "HUD";
 	public static var metronomeVolume:Float = 0;
+	public static var onShittoMiss:Bool = false;
+//	public static var saveReplays:Bool = true;
+	public static var iconbops:String = "";
+	public static var fpsRainBow:Bool = false;
+	public static var mousecursor:String = "Flixel";
+	public static var onbeattooldbf:Bool = false;
+	public static var gameHUD:String = "Default";
 
 	public static function loadDefaultKeys() {
 		defaultKeys = keyBinds.copy();
@@ -155,11 +162,18 @@ class ClientPrefs {
 		FlxG.save.data.richPresence = richPresence;
 		FlxG.save.data.comboSprCamera = comboSprCamera;
 		FlxG.save.data.metronomeVolume = metronomeVolume;
+		FlxG.save.data.onShittoMiss = onShittoMiss;
+//		FlxG.save.data.saveReplays = saveReplays;
+		FlxG.save.data.iconbops = iconbops;
+		FlxG.save.data.fpsRainBow = fpsRainBow;
+		FlxG.save.data.mousecursor = mousecursor;
+		FlxG.save.data.onbeattooldbf = onbeattooldbf;
+		FlxG.save.data.gameHUD = gameHUD;
 	
 		FlxG.save.flush();
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2' #if (flixel < "5.0.0"), 'ninjamuffin99' #end); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		save.bind('controls_v2', CoolUtil.getSavePath()); //Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		save.data.customControls = keyBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
@@ -304,7 +318,7 @@ class ClientPrefs {
 			comboStacking = FlxG.save.data.comboStacking;
 
 		var save:FlxSave = new FlxSave();
-		save.bind('controls_v2' #if (flixel < "5.0.0"), 'ninjamuffin99' #end);
+		save.bind('controls_v2', CoolUtil.getSavePath());
 		if(save != null && save.data.customControls != null) {
 			var loadedControls:Map<String, Array<FlxKey>> = save.data.customControls;
 			for (control => keys in loadedControls) {
@@ -343,6 +357,34 @@ class ClientPrefs {
 		if (FlxG.save.data.metronomeVolume != null)
 		{
 			metronomeVolume = FlxG.save.data.metronomeVolume;
+		}
+		if (FlxG.save.data.onShittoMiss != null)
+		{
+			onShittoMiss = FlxG.save.data.onShittoMiss;
+		}
+/*		if (FlxG.save.data.saveReplays != null)
+		{
+			saveReplays = FlxG.save.data.saveReplays;
+		}*/
+		if (FlxG.save.data.iconbops != null)
+		{
+			iconbops = FlxG.save.data.iconbops;
+		}
+		if (FlxG.save.data.fpsRainBow != null)
+		{
+			fpsRainBow = FlxG.save.data.fpsRainBow;
+		}
+		if (FlxG.save.data.mousecursor != null)
+		{
+			mousecursor = FlxG.save.data.mousecursor;
+		}
+		if (FlxG.save.data.onbeattooldbf != null)
+		{
+			onbeattooldbf = FlxG.save.data.onbeattooldbf;
+		}
+		if (FlxG.save.data.gameHUD != null)
+		{
+			gameHUD = FlxG.save.data.gameHUD;
 		}
 	}
 

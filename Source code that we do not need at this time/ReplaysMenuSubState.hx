@@ -25,17 +25,18 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
+#if sys
+import sys.FileSystem;
+import sys.io.File;
+#end
+
 using StringTools;
 
-class OptionsState extends MusicBeatState
+class ReplaysMenuSubState extends MusicBeatSubstate
 {
-	#if desktop
-		//var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Discord', 'Replays'];
-		var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Ridiculous', 'Discord'];
-	#else
-		//var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Replays'];
-		var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Ridiculous'];
-	#end
+	var options:Array<String> = [];
+	var replays:Array<String> = [];
+	var songPath:String = "";
 
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -46,11 +47,13 @@ class OptionsState extends MusicBeatState
 
 	override function create()
 	{
+		replays = sys.FileSystem.readDirectory("assets/replays/");
+		options.push("Please Select");
+		for (i in 0...replays.length)
+		{
+			options.push(replays[i]);
+		}
 		FlxG.camera.bgColor = FlxColor.BLACK;
-		#if desktop
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Options Menu", null);
-		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
@@ -60,12 +63,15 @@ class OptionsState extends MusicBeatState
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
 
-		var titleText:Alphabet = new Alphabet(75, 40, 'Options', true);
+		var titleText:Alphabet = new Alphabet(75, 40, 'Replays Menu', true);
 		titleText.scaleX = 0.6;
 		titleText.scaleY = 0.6;
 		titleText.alpha = 0.4;
 		add(titleText);
 
+		#if desktop
+		DiscordClient.changePresence("Replays Menu", null);
+		#end
 
 		for (i in 0...options.length)
 		{
@@ -79,6 +85,7 @@ class OptionsState extends MusicBeatState
 		changeSelection();
 
 		FlxG.mouse.visible = false;
+		Sys.sleep(0.5);
 		super.create();
 	}
 
@@ -93,40 +100,23 @@ class OptionsState extends MusicBeatState
 			changeSelection(1);
 		}
 
-		if(FlxG.mouse.wheel != 0)
-		{
-			FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
-			changeSelection(-FlxG.mouse.wheel);
-		}
-
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new MainMenuState());
+			close();
 		}
 
 		if (controls.ACCEPT)
 		{
-			switch(options[curSelected]) {
-				case 'Note Colors':
-					openSubState(new options.NotesSubState());
-				case 'Controls':
-					openSubState(new options.ControlsSubState());
-				case 'Graphics':
-					openSubState(new options.GraphicsSettingsSubState());
-				case 'Visuals and UI':
-					openSubState(new options.VisualsUISubState());
-				case 'Gameplay':
-					openSubState(new options.GameplaySettingsSubState());
-				case 'Adjust Delay and Combo':
-					LoadingState.loadAndSwitchState(new options.NoteOffsetState());
-				case 'Discord':
-					openSubState(new options.DiscordSettingsSubState());
-				case 'Ridiculous':
-					openSubState(new options.RidiculousOptionsSubState());
-/*
-				case 'Replays':
-					openSubState(new options.ReplaysMenuSubState());
-*/
+			if (options.length != 0 && options[curSelected] != "Please Select"){
+				trace('Selected '+options[curSelected]);
+				WeekData.reloadWeekFiles(false);
+				PlayState.rep = Replay.LoadReplay("assets/replays/"+options[curSelected]);
+				var poop:String = Highscore.formatSong(PlayState.rep.replay.songName, PlayState.rep.replay.songDiff);
+				PlayState.SONG = Song.loadFromJson(poop,PlayState.rep.replay.songName);
+				PlayState.isStoryMode = false;
+				PlayState.loadRep = true;
+				PlayState.storyDifficulty = PlayState.rep.replay.songDiff;
+				LoadingState.loadAndSwitchState(new PlayState());
 			}
 		}
 		

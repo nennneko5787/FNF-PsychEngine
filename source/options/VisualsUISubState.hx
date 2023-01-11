@@ -111,6 +111,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.displayFormat = '%v px';
 			addOption(option);
 
+			var option:Option = new Option('FPS RainBow',
+				'If checked, the FPS counter will be rainbow colored.' ,
+				'fpsRainBow',
+				'bool',
+				false);
+			addOption(option);
+
 			var option:Option = new Option('Show FPS',
 				'If unchecked, hide the FPS counter.' ,
 				'showFPS',
@@ -180,6 +187,14 @@ class VisualsUISubState extends BaseOptionsMenu
 				'freeplayAutoPlaySong',
 				'bool',
 				false);
+			addOption(option);
+
+			var option:Option = new Option('Mouse Cursor:',
+				"You can change the mouse cursor to your preference." ,
+				'mousecursor',
+				'string',
+				'Flixel',
+				['Flixel','System']);
 			addOption(option);
 		}
 
@@ -252,6 +267,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			option.displayFormat = '%v px';
 			addOption(option);
 
+			var option:Option = new Option('FPS RainBow',
+				'チェックをつけると、FPSカウンターの色が虹色になります。',
+				'fpsRainBow',
+				'bool',
+				false);
+			addOption(option);
+
 			var option:Option = new Option('Show FPS',
 				'チェックを外すと、FPSカウンターを非表示にします。',
 				'showFPS',
@@ -321,6 +343,22 @@ class VisualsUISubState extends BaseOptionsMenu
 				'freeplayAutoPlaySong',
 				'bool',
 				false);
+			addOption(option);
+
+			var option:Option = new Option('Mouse Cursor:',
+				"マウスカーソルをお好みのものに変更できます。",
+				'mousecursor',
+				'string',
+				'Flixel',
+				['Flixel','System']);
+			addOption(option);
+
+			var option:Option = new Option('HUD:',
+				"HUDを変えられます。",
+				'gameHUD',
+				'string',
+				'Default',
+				['Default','FNF\'','Kade Engine']);
 			addOption(option);
 		}
 

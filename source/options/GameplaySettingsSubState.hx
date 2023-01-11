@@ -182,6 +182,21 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			option.changeValue = 0.1;
 			option.decimals = 1;
 			option.onChange = onChangeHitsoundVolume;
+
+			var option:Option = new Option('on Shit to Miss',
+				'If you submit a Shit, it will be a miss, same spec as Kade Engine.',
+				'onShittoMiss',
+				'bool',
+				false);
+			addOption(option);
+/*
+			var option:Option = new Option('Replay Auto Save',
+				"If unchecked, replays will not be saved." ,
+				'saveReplays',
+				'bool',
+				true);
+			addOption(option);
+*/
 		}
 
 		if (ClientPrefs.language == "Japanese")
@@ -332,6 +347,28 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			option.changeValue = 0.1;
 			option.decimals = 1;
 			option.onChange = onChangeHitsoundVolume;
+
+			var option:Option = new Option('on Shit to Miss',
+				'Shitを出すとミスになります。Kade Engineと同じ仕様です。',
+				'onShittoMiss',
+				'bool',
+				false);
+			addOption(option);
+/*
+			var option:Option = new Option('Replay Auto Save',
+				"チェックをはずした場合、リプレイは保存されません。",
+				'saveReplays',
+				'bool',
+				true);
+			addOption(option);
+*/
+			var option:Option = new Option('onBeat Icon',
+				'跳ねるか、傾くか。',
+				'iconbops',
+				'string',
+				'jump',
+				['jump', 'heel over']);
+			addOption(option);
 		}
 
 		super();
