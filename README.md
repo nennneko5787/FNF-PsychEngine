@@ -4,6 +4,12 @@ Note: This document uses the DeepL translation and the text may be incorrect.
 If you have any questions, please contact Issues.  
   
 [Psych Engine Docs](PsychEngine.md)
+# Friday Night Funkin'
+**Friday Night Funkin'** is a rhythm game originally made for Ludum Dare 47 "Stuck In a Loop".
+
+Links: **[itch.io page](https://ninja-muffin24.itch.io/funkin) ⋅ [Newgrounds](https://www.newgrounds.com/portal/view/770371) ⋅ [source code on GitHub](https://github.com/ninjamuffin99/Funkin)**
+> Uh oh! Your tryin to kiss ur hot girlfriend, but her MEAN and EVIL dad is trying to KILL you! He's an ex-rockstar, the only way to get to his heart? The power of music... 
+
 # Friday Night Funkin' - nekoEngine
 Links: [gamebanana](https://gamebanana.com/mods/406751) | [html5 version](https://www.nennneko5787.ml/FNF-nekoEngine)  
 A mod that has only the good features of Kade Engine, Psych Engine and Leather Engine (or maybe not).  

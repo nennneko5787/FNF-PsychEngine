@@ -5,6 +5,11 @@
 一応修正していますが、分かりづらい点がありましたらIssuesまでどうぞ。
   
 [PsychEngineドキュメント](PsychEngine.md)
+# Friday Night Funkin'
+**Friday Night Funkin'**は、Ludum Dare 47 "Stuck In a Loop" 用に作られたリズム ゲームです。 
+
+リンク: **[itch.io](https://ninja-muffin24.itch.io/funkin) ⋅ [Newgrounds](https://www.newgrounds.com/portal/view/770371) ⋅ [ソースコード(Github)](https://github.com/ninjamuffin99/Funkin)**
+> ええとああ！ あなたはあなたの熱いガールフレンドにキスしようとしていますが、彼女の意地悪で邪悪なお父さんはあなたを殺そうとしています! 彼は元ロックスターですが、彼の心をつかむ唯一の方法はありますか? 音楽の力… 
 # Friday Night Funkin - nekoEngine
 リンク: [Gamebanana](https://gamebanana.com/mods/406751) | [html5版](https://www.nennneko5787.ml/FNF-nekoEngine)  
 Kade Engine、Psych Engine、Leather Engineの良いところだけを集めたMOD(?)。 
