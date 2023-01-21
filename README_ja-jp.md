@@ -1,3 +1,6 @@
+# サポート休止のお知らせ
+現在、Funkinを改造して自作エンジンを作っています [nekoEngine2](https://github.com/nennneko5787/FNF-nekoEngine2)
+# Document
 [English version](README.md)  
 
 ※このドキュメントはDeepL翻訳を使用しており、文章が正しくない場合があります。  
