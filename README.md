@@ -1,3 +1,6 @@
+# Pause Of Support
+Currently I'm modifying Funkin to build my own engine! [nekoEngine2](https://github.com/nennneko5787/FNF-nekoEngine2)
+# Document
 [日本語版](README_ja-jp.md)  
 
 Note: This document uses the DeepL translation and the text may be incorrect.  
